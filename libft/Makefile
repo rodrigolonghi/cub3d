@@ -6,7 +6,7 @@
 #    By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/05 20:36:30 by rfelipe-          #+#    #+#              #
-#    Updated: 2022/08/31 04:00:32 by rfelipe-         ###   ########.fr        #
+#    Updated: 2022/10/10 21:21:29 by rfelipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS = ft_atoi.c \
 		ft_strjoin.c \
 		ft_strlcpy.c \
 		ft_strlen.c \
+		ft_strncmp.c \
 		ft_strnstr.c \
 		ft_strtrim.c \
 		ft_substr.c \

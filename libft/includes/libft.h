@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 20:36:32 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/08/31 04:00:18 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:22:00 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ft_isdigit(int c);
 int		ft_lstsize(t_list *lst);
 int		ft_memcmp(void *s1, void *s2, size_t n);
 int		ft_strlen(char *str);
+int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_itoa(int n);
 char	*ft_itohex(unsigned int arg);
 char	*ft_matrix_to_str(char **matrix);

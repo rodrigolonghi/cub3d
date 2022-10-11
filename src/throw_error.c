@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   throw_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 20:03:38 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 19:34:22 by rfelipe-         ###   ########.fr       */
+/*   Created: 2022/10/10 19:45:35 by rfelipe-          #+#    #+#             */
+/*   Updated: 2022/10/10 19:45:43 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char *argv[])
+void	throw_error(char *e)
 {
-	t_game	game;
-
-	start_game(&game, argc, argv);
-	return (0);
+	printf("Error\n%s\n", e);
+	exit(0);
 }

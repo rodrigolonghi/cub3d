@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 20:03:38 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 19:34:22 by rfelipe-         ###   ########.fr       */
+/*   Created: 2021/05/24 05:54:33 by rfelipe-          #+#    #+#             */
+/*   Updated: 2022/10/10 21:21:37 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_strncmp(char *s1, char *s2, size_t n)
 {
-	t_game	game;
+	size_t	pos;
 
-	start_game(&game, argc, argv);
+	pos = 0;
+	while (pos < n)
+	{
+		if (s1[pos] != s2[pos])
+			return ((unsigned char)s1[pos] - (unsigned char)s2[pos]);
+		else if (s1[pos] == '\0' || s2[pos] == '\0')
+			return ((unsigned char)s1[pos] - (unsigned char)s2[pos]);
+		pos++;
+	}
 	return (0);
 }

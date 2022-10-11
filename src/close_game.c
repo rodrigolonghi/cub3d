@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 20:03:38 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 19:34:22 by rfelipe-         ###   ########.fr       */
+/*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
+/*   Updated: 2022/10/10 19:42:11 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char *argv[])
+static void	free_game(t_game *game)
 {
-	t_game	game;
+	int	i;
 
-	start_game(&game, argc, argv);
+	i = 0;
+	if (game->map.coordinates)
+	{
+		while (i < game->map.rows)
+		{
+			free(game->map.coordinates[i]);
+			i++;
+		}
+		free(game->map.coordinates);
+	}
+}
+
+int	close_game(t_game *game)
+{
+	free_game(game);
+	exit(0);
 	return (0);
 }
