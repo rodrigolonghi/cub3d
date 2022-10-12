@@ -6,7 +6,7 @@
 #    By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 20:10:29 by rfelipe-          #+#    #+#              #
-#    Updated: 2022/10/10 21:18:03 by rfelipe-         ###   ########.fr        #
+#    Updated: 2022/10/12 15:42:19 by rfelipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRC = $(SRC_DIR)/cub3d.c \
 		$(SRC_DIR)/check_params.c \
 		$(SRC_DIR)/close_game.c \
 		$(SRC_DIR)/key_hook.c \
+		$(SRC_DIR)/calc.c \
+		$(SRC_DIR)/color.c \
 		$(SRC_DIR)/start_game.c \
 		$(SRC_DIR)/throw_error.c
 

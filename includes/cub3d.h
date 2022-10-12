@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 19:47:33 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:34:36 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_map
 {
 	int		cols;
 	int		rows;
+	int		pixel_map[WIDTH][HEIGHT];
 	char	**coordinates;
 }	t_map;
 
@@ -54,10 +55,19 @@ typedef struct s_sprite
 	int		endian;
 }	t_sprite;
 
+typedef struct s_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
+
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	t_color		ceilling;
+	t_color		floor;
 	t_sprite	no;
 	t_sprite	so;
 	t_sprite	we;
@@ -72,5 +82,9 @@ int		key_hook(int key, void *param);
 void	throw_error(char *e);
 void	check_params(int argc, char *argv[]);
 void	check_map(t_game *game, char *map);
+t_color	create_color(double r, double g, double b);
+int		encode_rgb(t_color color);
+int		render(t_game *game);
+void	calculate(t_game *game);
 
 #endif
