@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:38:27 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:45:01 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	start_win(t_game *game)
 
 void	start_game(t_game *game, int argc, char *argv[])
 {
+	game->mlx = NULL;
+	game->win = NULL;
 	check_params(argc, argv);
 	check_map(game, argv[1]);
 	start_win(game);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 20:10:29 by rfelipe-          #+#    #+#              #
-#    Updated: 2022/10/12 15:42:19 by rfelipe-         ###   ########.fr        #
+#    Updated: 2022/10/12 20:48:50 by acarneir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 CC = cc
 FLAGS = -g -Wall -Wextra -Werror
 MLX_FLAGS = -lmlx -lXext -lX11
-VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck -q ./cub3D
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck -q ./cub3D map1.cub
 
 LIBFT_DIR = ./libft
 LIBFT = libft/libft.a

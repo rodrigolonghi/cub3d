@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 19:42:11 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:54:27 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	free_game(t_game *game)
 	int	i;
 
 	i = 0;
+	if (game->characters)
+		free(game->characters);
 	if (game->map.coordinates)
 	{
 		while (i < game->map.rows)
@@ -25,6 +27,21 @@ static void	free_game(t_game *game)
 			i++;
 		}
 		free(game->map.coordinates);
+	}
+	if (game->mlx)
+	{
+		if (game->win)
+		{
+			mlx_destroy_window(game->mlx, game->win);
+			game->win = NULL;
+			ft_free_ptr((void *)&game->win);
+		}
+	// if (game->floor.img != NULL)
+	// 	mlx_destroy_image(game->mlx, game->floor.img);
+	// ft_free_ptr((void *)&game->player.pos);
+	// ft_free_ptr((void *)&game->player.img);
+		mlx_destroy_display(game->mlx);
+		ft_free_ptr(&game->mlx);
 	}
 }
 

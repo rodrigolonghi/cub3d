@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:34:36 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:51:53 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define ARROW_LEFT		0xff51
 # define ARROW_RIGHT	0xff53
 # define ESC			0xff1b
-# define WIDTH			800
-# define HEIGHT			450
+# define WIDTH			960
+# define HEIGHT			600
 
 typedef struct s_pos
 {
@@ -74,13 +74,15 @@ typedef struct s_game
 	t_sprite	ea;
 	t_map		map;
 	t_pos		player_pos;
+	int			*characters;
 }	t_game;
 
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
 int		key_hook(int key, void *param);
-void	throw_error(char *e);
+void	throw_error(char *e, t_game *game);
 void	check_params(int argc, char *argv[]);
+int		open_fd(char *file);
 void	check_map(t_game *game, char *map);
 t_color	create_color(double r, double g, double b);
 int		encode_rgb(t_color color);

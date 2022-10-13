@@ -3,36 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/10 21:23:15 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:59:36 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	check_map_characters2(char *aux, int *rows_n_cols, int *characters,
-	t_game *game)
+static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
 {
 	if (aux[rows_n_cols[1]] == '0')
-		characters[0]++;
+		game->characters[0]++;
 	else if (aux[rows_n_cols[1]] == '1')
-		characters[1]++;
+		game->characters[1]++;
 	else if (aux[rows_n_cols[1]] == 'N' || aux[rows_n_cols[1]] == 'S'
 		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
 	{
 		game->player_pos.x = rows_n_cols[0];
 		game->player_pos.y = rows_n_cols[1];
-		characters[2]++;
+		game->characters[2]++;
 	}
 	else
-		throw_error("Invalid character on map");
+		return (1);
+	return (0);
 }
 
-static void	check_map_characters(t_game *game, int *characters)
+static void	check_map_characters(t_game *game)
 {
-	int		*rows_n_cols;
+	int	*rows_n_cols;
+	int	error;
 
 	rows_n_cols = ft_calloc(2, sizeof(int));
 	while (rows_n_cols[0] < game->map.rows)
@@ -40,8 +41,13 @@ static void	check_map_characters(t_game *game, int *characters)
 		rows_n_cols[1] = 0;
 		while (rows_n_cols[1] < game->map.cols)
 		{
-			check_map_characters2(game->map.coordinates[rows_n_cols[0]],
-				rows_n_cols, characters, game);
+			error = check_map_characters2(game->map.coordinates[rows_n_cols[0]],
+					rows_n_cols, game);
+			if (error)
+			{
+				free(rows_n_cols);
+				throw_error("Invalid character on map", game);
+			}
 			rows_n_cols[1]++;
 		}
 		rows_n_cols[0]++;
@@ -56,7 +62,7 @@ static void	check_map_walls(t_game *game, char *map)
 	int		cols;
 
 	rows = 0;
-	fd = open(ft_strjoin("./maps/", map), O_RDWR);
+	fd = open_fd(map);
 	while (rows < game->map.rows)
 	{
 		get_next_line(fd, &game->map.coordinates[rows]);
@@ -66,7 +72,7 @@ static void	check_map_walls(t_game *game, char *map)
 			if ((cols == 0 || cols == game->map.cols - 1
 					|| rows == 0 || rows == game->map.rows - 1)
 				&& game->map.coordinates[rows][cols] != '1')
-				throw_error("Map must be closed/surrounded by walls");
+				throw_error("Map must be closed/surrounded by walls", game);
 			cols++;
 		}
 		rows++;
@@ -81,7 +87,7 @@ static void	count_map_size(t_game *game, char *map)
 
 	game->map.rows = 0;
 	game->map.cols = -1;
-	fd = open(ft_strjoin("./maps/", map), O_RDWR);
+	fd = open_fd(map);
 	while (get_next_line(fd, &aux) == 1)
 	{
 		if (game->map.cols == -1)
@@ -92,11 +98,13 @@ static void	count_map_size(t_game *game, char *map)
 			break ;
 		}
 		game->map.rows++;
+		if (aux != NULL)
+			free(aux);
 	}
 	if (game->map.cols != (int) ft_strlen(aux) && game->map.cols != -1)
 		game->map.cols = -1;
 	if (game->map.cols <= 0 || game->map.rows <= 0)
-		throw_error("Map must be rectangular");
+		throw_error("Map must be rectangular", game);
 	game->map.rows++;
 	if (aux != NULL)
 		free(aux);
@@ -105,16 +113,13 @@ static void	count_map_size(t_game *game, char *map)
 
 void	check_map(t_game *game, char *map)
 {
-	int	*characters;
-
-	characters = ft_calloc(3, sizeof(int));
+	game->characters = ft_calloc(3, sizeof(int));
 	count_map_size(game, map);
 	game->map.coordinates = malloc(sizeof(char *) * game->map.rows);
 	check_map_walls(game, map);
-	check_map_characters(game, characters);
-	if (characters[2] == 0)
-		throw_error("No player was found!");
-	if (characters[2] != 1)
-		throw_error("You need to put exactly one player on the map.");
-	free(characters);
+	check_map_characters(game);
+	if (game->characters[2] == 0)
+		throw_error("No player was found!", game);
+	if (game->characters[2] != 1)
+		throw_error("You need to put exactly one player on the map.", game);
 }
