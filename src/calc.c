@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 01:09:35 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/15 01:31:10 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	fill_background(t_game *game)
 	}
 }
 
-static void	calculate_current_ray(t_game *game, int x)
+static void	calculate_current_ray(t_game *game, int i)
 {
-	game->multiplier = 2.0 * (x * WIDTH) - 1.0;
+	game->multiplier = 2.0 * (i / WIDTH) - 1.0;
 	game->camera_pixel = vector_mul_scal(game->camera_plane, game->multiplier);
 	game->ray_dir = vector_add(game->player_dir, game->camera_pixel);
 	printf("rayDir = [%f, %f] ", game->ray_dir.x, game->ray_dir.y);
@@ -137,18 +137,18 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	wall_start_y = HEIGHT / 2.0 - wall_height / 2.0;
 	wall_end_y = HEIGHT / 2.0 + wall_height / 2.0;
 	printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
-	// if(wall_start_y < wall_end_y)
-	// {
-	// 	j = (int)(wall_start_y);
-	// 	end = (int)(wall_end_y);
-	// }
-	// else
-	// {
-	// 	j = (int)(wall_end_y);
-	// 	end = (int)(wall_start_y);
-	// }
-	j = (int)(wall_start_y);
-	end = (int)(wall_end_y);
+	if(wall_start_y < wall_end_y)
+	{
+		j = (int)(wall_start_y);
+		end = (int)(wall_end_y);
+	}
+	else
+	{
+		j = (int)(wall_end_y);
+		end = (int)(wall_start_y);
+	}
+	// j = (int)(wall_start_y);
+	// end = (int)(wall_end_y);
 	while (j < end)
 	{
 		// printf("i = %d, j = %d\n", i, j);
