@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 21:51:53 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/15 00:07:45 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # define WIDTH			960
 # define HEIGHT			600
 
-typedef struct s_pos
+typedef struct s_vec
 {
-	int	x;
-	int	y;
-}	t_pos;
+	double	x;
+	double	y;
+}	t_vec;
 
 typedef struct s_map
 {
@@ -73,7 +73,22 @@ typedef struct s_game
 	t_sprite	we;
 	t_sprite	ea;
 	t_map		map;
-	t_pos		player_pos;
+	t_vec		player_pos;
+	t_vec		player_dir;
+	t_vec		map_pos;
+	t_vec		hit_pos;
+	t_vec		camera_plane;
+	t_vec		camera_pixel;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		dist_to_side_x;
+	double		dist_to_side_y;
+	double		step_x;
+	double		step_y;
+	double		perp_dist;
+	t_vec		ray_dir;
+	double		multiplier;
+	int			hit_side;
 	int			*characters;
 }	t_game;
 
@@ -88,5 +103,8 @@ t_color	create_color(double r, double g, double b);
 int		encode_rgb(t_color color);
 int		render(t_game *game);
 void	calculate(t_game *game);
+t_vec	create_vector(double x, double y);
+t_vec	vector_add(t_vec a, t_vec b);
+t_vec	vector_mul_scal(t_vec a, double b);
 
 #endif

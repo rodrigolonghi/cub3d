@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 21:59:36 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/14 23:57:50 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
 	else if (aux[rows_n_cols[1]] == 'N' || aux[rows_n_cols[1]] == 'S'
 		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
 	{
-		game->player_pos.x = rows_n_cols[0];
-		game->player_pos.y = rows_n_cols[1];
+		game->map_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
+		game->player_pos = vector_add(game->map_pos, create_vector(0.5, 0.5));
+		if (aux[rows_n_cols[1]] == 'N')
+			game->player_dir = create_vector(0, -1);
+		else if (aux[rows_n_cols[1]] == 'S')
+			game->player_dir = create_vector(0, 1);
+		else if (aux[rows_n_cols[1]] == 'W')
+			game->player_dir = create_vector(-1, 0);
+		else if (aux[rows_n_cols[1]] == 'E')
+			game->player_dir = create_vector(1, 0);
 		game->characters[2]++;
 	}
 	else

@@ -6,11 +6,18 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 21:45:01 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/14 22:32:25 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+static void	initiate(t_game *game)
+{
+	game->mlx = NULL;
+	game->win = NULL;
+	game->camera_plane = create_vector(0.66, 0);
+}
 
 static void	start_win(t_game *game)
 {
@@ -23,8 +30,7 @@ static void	start_win(t_game *game)
 
 void	start_game(t_game *game, int argc, char *argv[])
 {
-	game->mlx = NULL;
-	game->win = NULL;
+	initiate(game);
 	check_params(argc, argv);
 	check_map(game, argv[1]);
 	start_win(game);
