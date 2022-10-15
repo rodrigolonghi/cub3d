@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 00:32:11 by rfelipe-          #+#    #+#             */
-/*   Updated: 2021/11/13 23:16:11 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:27:15 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	ft_remove_nl(char **save, char **line)
 	*line = ft_substr_gnl(*save, 0, size);
 	temp = ft_strdup_gnl((*save) + size + 1);
 	free(*save);
-	*save = temp;
+	*save = ft_strdup_gnl(temp);
+	free(temp);
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 20:10:29 by rfelipe-          #+#    #+#              #
-#    Updated: 2022/10/07 20:10:31 by rfelipe-         ###   ########.fr        #
+#    Updated: 2022/10/14 22:20:17 by acarneir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 CC = cc
 FLAGS = -g -Wall -Wextra -Werror
 MLX_FLAGS = -lmlx -lXext -lX11
-VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck -q ./cub3D
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck -q ./cub3D map1.cub
 
 LIBFT_DIR = ./libft
 LIBFT = libft/libft.a
@@ -24,7 +24,16 @@ MLX_DIR = mlx_linux
 MLX = mlx_linux/libmlx.a
 
 SRC_DIR = src
-SRC = $(SRC_DIR)/cub3d.c
+SRC = $(SRC_DIR)/cub3d.c \
+		$(SRC_DIR)/check_map.c \
+		$(SRC_DIR)/check_params.c \
+		$(SRC_DIR)/close_game.c \
+		$(SRC_DIR)/key_hook.c \
+		$(SRC_DIR)/calc.c \
+		$(SRC_DIR)/color.c \
+		$(SRC_DIR)/start_game.c \
+		$(SRC_DIR)/vector.c \
+		$(SRC_DIR)/throw_error.c
 
 INCLUDE_DIR = includes
 INCLUDE = $(INCLUDE_DIR)/cub3d.h
