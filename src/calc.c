@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 17:33:30 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:02:19 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,57 +35,57 @@ static void	fill_background(t_game *game)
 
 static void	calculate_current_ray(t_game *game, int i)
 {
-	printf("i2 = %d ", i);
 	game->multiplier = (2.0 * ((double)(i) / (double)(WIDTH))) - 1.0;
-	printf("mul = %f ", game->multiplier);
 	game->camera_pixel = vector_mul_scal(game->camera_plane, game->multiplier);
 	game->ray_dir = vector_add(game->player_dir, game->camera_pixel);
-	printf("pDir = [%f, %f] ", game->player_dir.x, game->player_dir.y);
-	printf("cpx = [%f, %f] ", game->camera_pixel.x, game->camera_pixel.y);
-	printf("rayDir = [%f, %f]\n", game->ray_dir.x, game->ray_dir.y);
+	// printf("i2 = %d ", i);
+	// printf("mul = %f ", game->multiplier);
+	// printf("pDir = [%f, %f] ", game->player_dir.x, game->player_dir.y);
+	// printf("cpx = [%f, %f] ", game->camera_pixel.x, game->camera_pixel.y);
+	printf("rayDir = [%f, %f] ", game->ray_dir.x, game->ray_dir.y);
 }
 
 static void	calculate_dda_variables(t_game *game)
 {
-	if (game->ray_dir.x == 0)
+	if (game->ray_dir.x == 0.0)
 	{
-		game->delta_dist_x = 1;
-		game->delta_dist_y = 0;
+		game->delta_dist_x = 1.0;
+		game->delta_dist_y = 0.0;
 	}
 	else
 		if (game->ray_dir.y)
 			game->delta_dist_x = fabs(1.0 / game->ray_dir.x);
-	if (game->ray_dir.y == 0)
+	if (game->ray_dir.y == 0.0)
 	{
-		game->delta_dist_x = 0;
-		game->delta_dist_y = 1;
+		game->delta_dist_x = 0.0;
+		game->delta_dist_y = 1.0;
 	}
 	else
 		if (game->ray_dir.x)
 			game->delta_dist_y = fabs(1.0 / game->ray_dir.y);
-	if (game->ray_dir.x < 0)
+	if (game->ray_dir.x < 0.0)
 	{
 		game->dist_to_side_x = (game->player_pos.x - game->map_pos.x)
 			* game->delta_dist_x;
-		game->step_x = -1;
+		game->step_x = -1.0;
 	}
 	else
 	{
-		game->dist_to_side_x = (game->player_pos.x + 1 - game->map_pos.x)
+		game->dist_to_side_x = (game->player_pos.x + 1.0 - game->map_pos.x)
 			* game->delta_dist_x;
-		game->step_x = 1;
+		game->step_x = 1.0;
 	}
-	if (game->ray_dir.y < 0)
+	if (game->ray_dir.y < 0.0)
 	{
 		game->dist_to_side_y = (game->player_pos.y - game->map_pos.y)
 			* game->delta_dist_y;
-		game->step_y = -1;
+		game->step_y = -1.0;
 	}
 	else
 	{
-		game->dist_to_side_y = (game->player_pos.y + 1 - game->map_pos.y)
+		game->dist_to_side_y = (game->player_pos.y + 1.0 - game->map_pos.y)
 			* game->delta_dist_y;
-		game->step_y = 1;
+		game->step_y = 1.0;
 	}
 }
 
@@ -137,10 +137,10 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	int		j;
 	int		end;
 
-	wall_height = HEIGHT / game->perp_dist;
-	wall_start_y = HEIGHT / 2.0 - wall_height / 2.0;
-	wall_end_y = HEIGHT / 2.0 + wall_height / 2.0;
-	// printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
+	wall_height = (double)(HEIGHT) / game->perp_dist;
+	wall_start_y = (double)(HEIGHT) / 2.0 - wall_height / 2.0;
+	wall_end_y = (double)(HEIGHT) / 2.0 + wall_height / 2.0;
+	printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
 	if(wall_start_y < wall_end_y)
 	{
 		j = (int)(wall_start_y);
