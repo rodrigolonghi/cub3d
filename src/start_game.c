@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/14 22:32:25 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:00:04 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static void	initiate(t_game *game)
 {
 	game->mlx = NULL;
 	game->win = NULL;
-	game->camera_plane = create_vector(0.66, 0);
-}
+}	
 
 static void	start_win(t_game *game)
 {
