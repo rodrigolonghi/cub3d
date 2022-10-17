@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 18:20:16 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:33:13 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,31 @@ static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
 		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
 	{
 		game->map_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
-		// game->player_pos = vector_add(game->map_pos, create_vector(0.5, 0.5));
 		game->player_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
 
 		if (aux[rows_n_cols[1]] == 'N')
 		{
 			game->player_dir = create_vector(0.0, -1.0);
 			game->camera_plane = create_vector(0.66, 0.0);
+			game->player_orient = 'N';
 		}
 		else if (aux[rows_n_cols[1]] == 'S')
 		{
 			game->player_dir = create_vector(0.0, 1.0);
 			game->camera_plane = create_vector(-0.66, 0.0);
+			game->player_orient = 'S';
 		}
 		else if (aux[rows_n_cols[1]] == 'W')
 		{
 			game->player_dir = create_vector(-1.0, 0.0);
 			game->camera_plane = create_vector(0.0, -0.66);
+			game->player_orient = 'W';
 		}
 		else if (aux[rows_n_cols[1]] == 'E')
 		{
 			game->player_dir = create_vector(1.0, 0.0);
 			game->camera_plane = create_vector(0.0, 0.66);
+			game->player_orient = 'E';
 		}
 		game->characters[2]++;
 	}

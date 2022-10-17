@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 01:32:02 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:32:28 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define ESC			0xff1b
 # define WIDTH			960
 # define HEIGHT			600
+# define TRUE			1
+# define FALSE			0
 
 typedef struct s_vec
 {
@@ -75,6 +77,7 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
+	char		player_orient;
 	t_vec		map_pos;
 	t_vec		hit_pos;
 	t_vec		camera_plane;
@@ -106,5 +109,8 @@ void	calculate(t_game *game);
 t_vec	create_vector(double x, double y);
 t_vec	vector_add(t_vec a, t_vec b);
 t_vec	vector_mul_scal(t_vec a, double b);
+int		check_movement(t_game *g, int x, int y);
+void	go_up(t_game *game);
+void	go_down(t_game *game);
 
 #endif

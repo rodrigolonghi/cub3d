@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 17:00:04 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:51:04 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	start_game(t_game *game, int argc, char *argv[])
 	start_win(game);
 	mlx_key_hook(game->win, key_hook, game);
 	mlx_hook(game->win, 17, 0, close_game, game);
-	// mlx_expose_hook(game->win, render, game);
+	mlx_expose_hook(game->win, render, game);
 	mlx_loop(game->mlx);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);

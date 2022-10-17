@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 18:02:19 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:23:58 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	calculate_current_ray(t_game *game, int i)
 	// printf("mul = %f ", game->multiplier);
 	// printf("pDir = [%f, %f] ", game->player_dir.x, game->player_dir.y);
 	// printf("cpx = [%f, %f] ", game->camera_pixel.x, game->camera_pixel.y);
-	printf("rayDir = [%f, %f] ", game->ray_dir.x, game->ray_dir.y);
+	// printf("rayDir = [%f, %f] ", game->ray_dir.x, game->ray_dir.y);
 }
 
 static void	calculate_dda_variables(t_game *game)
@@ -53,7 +53,7 @@ static void	calculate_dda_variables(t_game *game)
 		game->delta_dist_y = 0.0;
 	}
 	else
-		if (game->ray_dir.y)
+		if (game->ray_dir.y != 0.0)
 			game->delta_dist_x = fabs(1.0 / game->ray_dir.x);
 	if (game->ray_dir.y == 0.0)
 	{
@@ -61,7 +61,7 @@ static void	calculate_dda_variables(t_game *game)
 		game->delta_dist_y = 1.0;
 	}
 	else
-		if (game->ray_dir.x)
+		if (game->ray_dir.x != 0.0)
 			game->delta_dist_y = fabs(1.0 / game->ray_dir.y);
 	if (game->ray_dir.x < 0.0)
 	{
@@ -140,8 +140,8 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	wall_height = (double)(HEIGHT) / game->perp_dist;
 	wall_start_y = (double)(HEIGHT) / 2.0 - wall_height / 2.0;
 	wall_end_y = (double)(HEIGHT) / 2.0 + wall_height / 2.0;
-	printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
-	if(wall_start_y < wall_end_y)
+	// printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
+	if (wall_start_y < wall_end_y)
 	{
 		j = (int)(wall_start_y);
 		end = (int)(wall_end_y);
@@ -171,7 +171,7 @@ void	calculate(t_game *game)
 	while (i < WIDTH)
 	{
 		// printf("start\n");
-		printf("i = %d ", i);
+		// printf("i = %d ", i);
 		calculate_current_ray(game, i);
 		calculate_dda_variables(game);
 		execute_dda(game);
@@ -183,5 +183,5 @@ void	calculate(t_game *game)
 		draw_wall(game, wall_color, i);
 		i++;
 	}
-	printf("end\n");
+	// printf("end\n");
 }
