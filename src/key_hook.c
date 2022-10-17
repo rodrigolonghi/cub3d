@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 18:30:00 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:30:35 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,48 @@ int	check_movement(t_game *g, int x, int y)
 	return (FALSE);
 }
 
-int	key_hook(int key, void *param)
+static void	key_press(int key, t_game *game)
+{
+	if (key == UP)
+		game->walk = -1;
+	if (key == DOWN)
+		game->walk = 1;
+	if (key == LEFT)
+		game->walk = -1;
+	if (key == RIGHT)
+		game->walk = 1;
+	if (key == ARROW_LEFT)
+		game->turn = -1;
+	if (key == ARROW_RIGHT)
+		game->turn = 1;
+}
+
+static void	key_release(int key, t_game *game)
+{
+	if (key == UP)
+		game->walk = 0;
+	if (key == DOWN)
+		game->walk = 0;
+	if (key == LEFT)
+		game->walk = 0;
+	if (key == RIGHT)
+		game->walk = 0;
+	if (key == ARROW_LEFT)
+		game->turn = 0;
+	if (key == ARROW_RIGHT)
+		game->turn = 0;
+}
+
+int	key_hook(int key, void *param, int key_type)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
 	if (key == ESC)
 		close_game(game);
-	if (key == UP)
-		go_up(game);
-	else if (key == DOWN)
-		go_down(game);
-	// else if (key == LEFT)
-	// 	go_left(game);
-	// else if (key == RIGHT)
-	// 	go_right(game);
-	// else if (key == ARROW_LEFT)
-	// 	turn_left(game);
-	// else if (key == ARROW_RIGHT)
-	// 	turn_right(game);
+	else if (key_type == PRESS)
+		key_press(key, game);
+	else
+		key_release(key, game);
 	return (0);
 }

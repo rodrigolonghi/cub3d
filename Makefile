@@ -6,7 +6,7 @@
 #    By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 20:10:29 by rfelipe-          #+#    #+#              #
-#    Updated: 2022/10/17 18:28:02 by rfelipe-         ###   ########.fr        #
+#    Updated: 2022/10/17 19:50:20 by rfelipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC = $(SRC_DIR)/cub3d.c \
 		$(SRC_DIR)/color.c \
 		$(SRC_DIR)/start_game.c \
 		$(SRC_DIR)/vector.c \
-		$(SRC_DIR)/movement_hook.c \
+		$(SRC_DIR)/player.c \
 		$(SRC_DIR)/throw_error.c
 
 INCLUDE_DIR = includes

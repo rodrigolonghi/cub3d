@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 18:23:58 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:41:49 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,6 @@ void	calculate(t_game *game)
 	i = 0;
 	while (i < WIDTH)
 	{
-		// printf("start\n");
-		// printf("i = %d ", i);
 		calculate_current_ray(game, i);
 		calculate_dda_variables(game);
 		execute_dda(game);
@@ -183,5 +181,4 @@ void	calculate(t_game *game)
 		draw_wall(game, wall_color, i);
 		i++;
 	}
-	// printf("end\n");
 }

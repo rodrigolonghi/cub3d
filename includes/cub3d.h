@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 18:32:28 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:43:33 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define HEIGHT			600
 # define TRUE			1
 # define FALSE			0
+# define PRESS			0
+# define RELEASE		1
 
 typedef struct s_vec
 {
@@ -77,6 +79,11 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
+	double		walk;
+	double		walk_side;
+	double		turn;
+	double		movement_speed;
+	t_vec		velocity;
 	char		player_orient;
 	t_vec		map_pos;
 	t_vec		hit_pos;
@@ -97,7 +104,7 @@ typedef struct s_game
 
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
-int		key_hook(int key, void *param);
+int		key_hook(int key, void *param, int key_type);
 void	throw_error(char *e, t_game *game);
 void	check_params(int argc, char *argv[]);
 int		open_fd(char *file);
@@ -112,5 +119,6 @@ t_vec	vector_mul_scal(t_vec a, double b);
 int		check_movement(t_game *g, int x, int y);
 void	go_up(t_game *game);
 void	go_down(t_game *game);
+void	refresh_player(t_game *game);
 
 #endif
