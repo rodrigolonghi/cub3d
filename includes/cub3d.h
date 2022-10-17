@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 19:43:33 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:59:01 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
-	double		walk;
-	double		walk_side;
+	double		y_walk;
+	double		x_walk;
 	double		turn;
 	double		movement_speed;
 	t_vec		velocity;
