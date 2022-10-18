@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 22:25:27 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:09:43 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
-	double		y_walk;
 	double		x_walk;
+	double		y_walk;
 	int			rotation;
 	double		movement_speed;
 	double		rotation_speed;
 	t_vec		velocity;
+	t_vec		strafe_vel;
 	char		player_orient;
 	t_vec		map_pos;
 	t_vec		hit_pos;
