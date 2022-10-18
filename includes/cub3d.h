@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 19:59:01 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 21:19:21 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct s_game
 
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
-int		key_hook(int key, void *param, int key_type);
 void	throw_error(char *e, t_game *game);
 void	check_params(int argc, char *argv[]);
 int		open_fd(char *file);
@@ -120,5 +119,7 @@ int		check_movement(t_game *g, int x, int y);
 void	go_up(t_game *game);
 void	go_down(t_game *game);
 void	refresh_player(t_game *game);
+int		press(int key, t_game *game);
+int		release(int key, t_game *game);
 
 #endif
