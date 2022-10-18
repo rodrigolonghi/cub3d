@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 21:28:03 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:14:51 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	key_press(int key, t_game *game)
 	if (key == RIGHT)
 		game->x_walk = 1;
 	if (key == ARROW_LEFT)
-		game->turn = -1;
-	if (key == ARROW_RIGHT)
 		game->turn = 1;
+	if (key == ARROW_RIGHT)
+		game->turn = -1;
 }
 
 static void	key_release(int key, t_game *game)
