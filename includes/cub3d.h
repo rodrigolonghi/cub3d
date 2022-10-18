@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 22:01:01 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:25:27 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_game
 	t_vec		player_dir;
 	double		y_walk;
 	double		x_walk;
-	double		turn;
+	int			rotation;
 	double		movement_speed;
 	double		rotation_speed;
 	t_vec		velocity;
@@ -122,6 +122,6 @@ void	go_down(t_game *game);
 void	refresh_player(t_game *game);
 int		press(int key, t_game *game);
 int		release(int key, t_game *game);
-t_vec	vector_rotation(t_vec vec, double degree, int wise);
+t_vec	vector_rotation(t_vec vec, double degree, int rotation);
 
 #endif

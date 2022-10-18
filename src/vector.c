@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:53 by acarneir          #+#    #+#             */
-/*   Updated: 2022/10/17 22:07:44 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:25:06 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@
 // 	return (vec);
 // }
 
-t_vec	vector_rotation(t_vec vec, double degree, int wise)
+t_vec	vector_rotation(t_vec vec, double degree, int rotation)
 {
 	t_vec	new_vec;
 
-	if (wise == 1)
+	if (rotation == 1)
 		new_vec = create_vector(cos(degree) * vec.x + sin(degree) * vec.y,
 				-1 * sin(degree) * vec.x + cos(degree) * vec.y);
-	else if (wise == -1)
+	else if (rotation == -1)
 		new_vec = create_vector(cos(degree) * vec.x + -1 * sin(degree) * vec.y,
 				sin(degree) * vec.x + cos(degree) * vec.y);
 	else
