@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:41:36 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/18 19:15:37 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:31:09 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	x_walk(t_game *game)
 	game->strafe_vel = vector_rotation(game->strafe_vel, M_PI / 2,
 			game->x_walk);
 	game->strafe_vel = vector_mul_scal(game->strafe_vel,
-			game->movement_speed * game->x_walk);
+			game->movement_speed * fabs(game->x_walk));
 }
 
 static void	y_walk(t_game *game)
