@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:53 by acarneir          #+#    #+#             */
-/*   Updated: 2022/10/17 22:25:06 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:44:18 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@
 // 	vec.w = a.w - b.w;
 // 	return (vec);
 // }
+
+t_vec	vector_mul(t_vec a, t_vec b)
+{
+	t_vec	vec;
+
+	vec.x = a.x * b.x;
+	vec.y = a.y * b.y;
+	return (vec);
+}
 
 t_vec	vector_rotation(t_vec vec, double degree, int rotation)
 {

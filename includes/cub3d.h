@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/18 19:09:43 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:56:07 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_game
 	double		multiplier;
 	int			hit_side;
 	int			*characters;
+	double		dist_wall;
 }	t_game;
 
 void	start_game(t_game *game, int argc, char *argv[]);
@@ -124,5 +125,6 @@ void	refresh_player(t_game *game);
 int		press(int key, t_game *game);
 int		release(int key, t_game *game);
 t_vec	vector_rotation(t_vec vec, double degree, int rotation);
+t_vec	vector_mul(t_vec a, t_vec b);
 
 #endif
