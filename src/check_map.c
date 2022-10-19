@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 18:33:13 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:42:57 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,36 @@ static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
 	else if (aux[rows_n_cols[1]] == 'N' || aux[rows_n_cols[1]] == 'S'
 		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
 	{
-		game->map_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
-		game->player_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
-
+		game->map_pos = create_vector(rows_n_cols[1], rows_n_cols[0]);
+		game->player_pos = create_vector(rows_n_cols[1] + 0.5, rows_n_cols[0]);
+		printf("[0]= %d [1] = %d\n", rows_n_cols[0], rows_n_cols[1]);
+		game->player_dir = create_vector(0.0, -1.0);
+		game->camera_plane = create_vector(0.66, 0.0);
 		if (aux[rows_n_cols[1]] == 'N')
 		{
-			game->player_dir = create_vector(0.0, -1.0);
-			game->camera_plane = create_vector(0.66, 0.0);
-			game->player_orient = 'N';
+			game->player_dir = vector_rotation(game->player_dir, 0, 1);
+			game->camera_plane = vector_rotation(game->camera_plane, 0, 1);
 		}
 		else if (aux[rows_n_cols[1]] == 'S')
 		{
-			game->player_dir = create_vector(0.0, 1.0);
-			game->camera_plane = create_vector(-0.66, 0.0);
-			game->player_orient = 'S';
+			// game->player_dir = create_vector(0.0, 1.0);
+			// game->camera_plane = create_vector(-0.66, 0.0);
+			game->player_dir = vector_rotation(game->player_dir, M_PI, 1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI, 1);
 		}
 		else if (aux[rows_n_cols[1]] == 'W')
 		{
-			game->player_dir = create_vector(-1.0, 0.0);
-			game->camera_plane = create_vector(0.0, -0.66);
-			game->player_orient = 'W';
+			// game->player_dir = create_vector(-1.0, 0.0);
+			// game->camera_plane = create_vector(0.0, -0.66);
+			game->player_dir = vector_rotation(game->player_dir, M_PI/2, 1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI/2, 1);
 		}
 		else if (aux[rows_n_cols[1]] == 'E')
 		{
-			game->player_dir = create_vector(1.0, 0.0);
-			game->camera_plane = create_vector(0.0, 0.66);
-			game->player_orient = 'E';
+			// game->player_dir = create_vector(1.0, 0.0);
+			// game->camera_plane = create_vector(0.0, 0.66);
+			game->player_dir = vector_rotation(game->player_dir, M_PI/2, -1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI/2, -1);
 		}
 		game->characters[2]++;
 	}
