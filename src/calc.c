@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 21:21:04 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:09:24 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,10 @@ static void	calculate_perpendicular_dist(t_game *game)
 	else
 		game->perp_dist = fabs(game->hit_pos.y - game->player_pos.y
 				+ ((1.0 - game->step_y) / 2.0)) / game->ray_dir.y;
+// 	if (game->hit_side == 0)
+// 		game->perp_dist = game->dist_to_side_x - game->delta_dist_x;
+// 	else
+// 		game->perp_dist = game->dist_to_side_y - game->delta_dist_y;
 }
 
 static void	draw_wall(t_game *game, t_color wall_color, int i)
@@ -158,7 +162,7 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	while (j < end)
 	{
 		// printf("i = %d, j = %d\n", i, j);
-		game->map.pixel_map[i][j] = encode_rgb(wall_color);
+		game->map.pixel_map[WIDTH - i][j] = encode_rgb(wall_color);
 		j++;
 	}
 }

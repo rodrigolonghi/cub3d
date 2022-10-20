@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 21:47:26 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:14:15 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 static void	key_press(int key, t_game *game)
 {
 	if (key == UP)
-		game->y_walk = 1;
+		game->y_walk = 1.0;
 	if (key == DOWN)
-		game->y_walk = -1;
+		game->y_walk = -1.0;
 	if (key == LEFT)
-		game->x_walk = 1;
+		game->x_walk = -1.0;
 	if (key == RIGHT)
-		game->x_walk = -1;
+		game->x_walk = 1.0;
 	if (key == ARROW_LEFT)
-		game->rotation = 1;
-	if (key == ARROW_RIGHT)
 		game->rotation = -1;
+	if (key == ARROW_RIGHT)
+		game->rotation = 1;
 }
 
 static void	key_release(int key, t_game *game)
