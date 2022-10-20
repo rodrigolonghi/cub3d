@@ -3,45 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:53 by acarneir          #+#    #+#             */
-/*   Updated: 2022/10/14 22:38:56 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:47:56 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// double	vector_length(t_vec a)
-// {
-// 	double	length;
+t_vec	vector_mul(t_vec a, t_vec b)
+{
+	t_vec	vec;
 
-// 	length = a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w;
-// 	length = sqrt(length);
-// 	return (length);
-// }
+	vec.x = a.x * b.x;
+	vec.y = a.y * b.y;
+	return (vec);
+}
 
-// t_vec	vector_div(t_vec a, double b)
-// {
-// 	t_vec	vec;
+t_vec	vector_rotation(t_vec vec, double degree, int rotation)
+{
+	t_vec	new_vec;
 
-// 	vec.x = a.x / b;
-// 	vec.y = a.y / b;
-// 	vec.z = a.z / b;
-// 	vec.w = a.w / b;
-// 	return (vec);
-// }
-
-// t_vec	vector_sub(t_vec a, t_vec b)
-// {
-// 	t_vec	vec;
-
-// 	vec.x = a.x - b.x;
-// 	vec.y = a.y - b.y;
-// 	vec.z = a.z - b.z;
-// 	vec.w = a.w - b.w;
-// 	return (vec);
-// }
+	if (rotation == 1)
+		new_vec = create_vector(cos(degree) * vec.x + sin(degree) * vec.y,
+				-1 * sin(degree) * vec.x + cos(degree) * vec.y);
+	else if (rotation == -1)
+		new_vec = create_vector(cos(degree) * vec.x + -1 * sin(degree) * vec.y,
+				sin(degree) * vec.x + cos(degree) * vec.y);
+	else
+		new_vec = vec;
+	return (new_vec);
+}
 
 t_vec	vector_add(t_vec a, t_vec b)
 {

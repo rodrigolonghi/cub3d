@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 01:32:02 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:14:24 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define ESC			0xff1b
 # define WIDTH			960
 # define HEIGHT			600
+# define TRUE			1
+# define FALSE			0
+# define PRESS			0
+# define RELEASE		1
 
 typedef struct s_vec
 {
@@ -75,6 +79,14 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
+	double		x_walk;
+	double		y_walk;
+	int			rotation;
+	double		movement_speed;
+	double		rotation_speed;
+	t_vec		velocity;
+	t_vec		strafe_vel;
+	char		player_orient;
 	t_vec		map_pos;
 	t_vec		hit_pos;
 	t_vec		camera_plane;
@@ -90,11 +102,11 @@ typedef struct s_game
 	double		multiplier;
 	int			hit_side;
 	int			*characters;
+	double		dist_wall;
 }	t_game;
 
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
-int		key_hook(int key, void *param);
 void	throw_error(char *e, t_game *game);
 void	check_params(int argc, char *argv[]);
 int		open_fd(char *file);
@@ -106,5 +118,13 @@ void	calculate(t_game *game);
 t_vec	create_vector(double x, double y);
 t_vec	vector_add(t_vec a, t_vec b);
 t_vec	vector_mul_scal(t_vec a, double b);
+int		check_movement(t_game *g, int x, int y);
+void	go_up(t_game *game);
+void	go_down(t_game *game);
+void	refresh_player(t_game *game);
+int		press(int key, t_game *game);
+int		release(int key, t_game *game);
+t_vec	vector_rotation(t_vec vec, double degree, int rotation);
+t_vec	vector_mul(t_vec a, t_vec b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/15 18:20:16 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:14:37 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,29 @@ static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
 	else if (aux[rows_n_cols[1]] == 'N' || aux[rows_n_cols[1]] == 'S'
 		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
 	{
-		game->map_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
-		// game->player_pos = vector_add(game->map_pos, create_vector(0.5, 0.5));
-		game->player_pos = create_vector(rows_n_cols[0], rows_n_cols[1]);
-
+		// game->map_pos = create_vector(rows_n_cols[1], rows_n_cols[0]);
+		game->player_pos = create_vector(rows_n_cols[0] + 0.5, rows_n_cols[1] + 0.5);
+		game->player_dir = create_vector(0.0, -1.0);
+		game->camera_plane = create_vector(0.66, 0.0);
 		if (aux[rows_n_cols[1]] == 'N')
 		{
-			game->player_dir = create_vector(0.0, -1.0);
-			game->camera_plane = create_vector(0.66, 0.0);
+			game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, 1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, 1);
 		}
 		else if (aux[rows_n_cols[1]] == 'S')
 		{
-			game->player_dir = create_vector(0.0, 1.0);
-			game->camera_plane = create_vector(-0.66, 0.0);
+			game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, -1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, -1);
 		}
 		else if (aux[rows_n_cols[1]] == 'W')
 		{
-			game->player_dir = create_vector(-1.0, 0.0);
-			game->camera_plane = create_vector(0.0, -0.66);
+			game->player_dir = vector_rotation(game->player_dir, 0, -1);
+			game->camera_plane = vector_rotation(game->camera_plane, 0, -1);
 		}
 		else if (aux[rows_n_cols[1]] == 'E')
 		{
-			game->player_dir = create_vector(1.0, 0.0);
-			game->camera_plane = create_vector(0.0, 0.66);
+			game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
+			game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
 		}
 		game->characters[2]++;
 	}
@@ -144,4 +144,6 @@ void	check_map(t_game *game, char *map)
 		throw_error("No player was found!", game);
 	if (game->characters[2] != 1)
 		throw_error("You need to put exactly one player on the map.", game);
+	game->map.coordinates[(int)(game->player_pos.x)]
+	[(int)(game->player_pos.y)] = '0';
 }
