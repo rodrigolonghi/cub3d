@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:41:36 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/18 23:45:18 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:13:31 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,5 @@ void	refresh_player(t_game *game)
 {
 	y_walk(game);
 	update_input(game);
-	printf("map_pos0 = [%f, %f] ", game->map_pos.x, game->map_pos.y);
-	game->map_pos.x = (int)(game->player_pos.x+0.01);
-	game->map_pos.y = (int)(game->player_pos.y+0.01);
-	printf("map_pos1 = [%f, %f]\n", game->map_pos.x, game->map_pos.y);
+	// printf("map_pos0 = [%f, %f] ", game->map_pos.x, game->map_pos.y);
 }
