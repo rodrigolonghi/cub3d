@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 19:41:49 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:21:04 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	calculate_current_ray(t_game *game, int i)
 
 static void	calculate_dda_variables(t_game *game)
 {
+	game->map_pos.x = (int)(game->player_pos.x);
+	game->map_pos.y = (int)(game->player_pos.y);
 	if (game->ray_dir.x == 0.0)
 	{
 		game->delta_dist_x = 1.0;
@@ -71,7 +73,7 @@ static void	calculate_dda_variables(t_game *game)
 	}
 	else
 	{
-		game->dist_to_side_x = (game->player_pos.x + 1.0 - game->map_pos.x)
+		game->dist_to_side_x = (game->map_pos.x + 1.0 - game->player_pos.x)
 			* game->delta_dist_x;
 		game->step_x = 1.0;
 	}
@@ -83,7 +85,7 @@ static void	calculate_dda_variables(t_game *game)
 	}
 	else
 	{
-		game->dist_to_side_y = (game->player_pos.y + 1.0 - game->map_pos.y)
+		game->dist_to_side_y = (game->map_pos.y + 1.0 - game->player_pos.y)
 			* game->delta_dist_y;
 		game->step_y = 1.0;
 	}
