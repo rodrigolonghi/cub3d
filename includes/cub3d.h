@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 22:25:27 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:56:07 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ typedef struct s_game
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;
-	double		y_walk;
 	double		x_walk;
+	double		y_walk;
 	int			rotation;
 	double		movement_speed;
 	double		rotation_speed;
 	t_vec		velocity;
+	t_vec		strafe_vel;
 	char		player_orient;
 	t_vec		map_pos;
 	t_vec		hit_pos;
@@ -101,6 +102,7 @@ typedef struct s_game
 	double		multiplier;
 	int			hit_side;
 	int			*characters;
+	double		dist_wall;
 }	t_game;
 
 void	start_game(t_game *game, int argc, char *argv[]);
@@ -123,5 +125,6 @@ void	refresh_player(t_game *game);
 int		press(int key, t_game *game);
 int		release(int key, t_game *game);
 t_vec	vector_rotation(t_vec vec, double degree, int rotation);
+t_vec	vector_mul(t_vec a, t_vec b);
 
 #endif

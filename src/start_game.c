@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 22:40:51 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:13:33 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ static void	initiate(t_game *game)
 {
 	game->mlx = NULL;
 	game->win = NULL;
-	game->movement_speed = 2.0;
+	game->movement_speed = 10.0 / 60.0;
 	game->rotation_speed = 1.0 / 60.0;
 	game->rotation = 0;
+	game->x_walk = 0.0;
 	game->y_walk = 0.0;
+	game->dist_wall = 0.4;
 }
 
 static void	start_win(t_game *game)

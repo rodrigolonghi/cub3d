@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/17 22:26:38 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:47:26 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int	check_movement(t_game *g, int x, int y)
-{
-	x = g->player_pos.x + x;
-	y = g->player_pos.y + y;
-	if (g->map.coordinates[x][y] == '0')
-		return (TRUE);
-	return (FALSE);
-}
 
 static void	key_press(int key, t_game *game)
 {
@@ -28,9 +19,9 @@ static void	key_press(int key, t_game *game)
 	if (key == DOWN)
 		game->y_walk = -1;
 	if (key == LEFT)
-		game->x_walk = -1;
-	if (key == RIGHT)
 		game->x_walk = 1;
+	if (key == RIGHT)
+		game->x_walk = -1;
 	if (key == ARROW_LEFT)
 		game->rotation = 1;
 	if (key == ARROW_RIGHT)
