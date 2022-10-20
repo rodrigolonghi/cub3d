@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:41:36 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 21:13:31 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:29:57 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ static void	update_input(t_game *game)
 {
 	game->velocity = vector_mul_scal(game->velocity,
 			1.0 / 60.0 * game->movement_speed);
-	printf("player_pos0 = [%f, %f] ", game->player_pos.x, game->player_pos.y);
 	game->player_pos = vector_add(game->player_pos, game->velocity);
-	printf("player_pos1 = [%f, %f] ", game->player_pos.x, game->player_pos.y);
 	game->camera_plane = vector_rotation(game->camera_plane,
 			game->rotation_speed, game->rotation);
 	game->player_dir = vector_rotation(game->player_dir,
@@ -36,5 +34,4 @@ void	refresh_player(t_game *game)
 {
 	y_walk(game);
 	update_input(game);
-	// printf("map_pos0 = [%f, %f] ", game->map_pos.x, game->map_pos.y);
 }
