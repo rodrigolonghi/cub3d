@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 23:14:37 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:33:37 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,18 @@ void	check_map(t_game *game, char *map)
 	game->map.coordinates = malloc(sizeof(char *) * game->map.rows);
 	check_map_walls(game, map);
 	check_map_characters(game);
-	if (game->characters[2] == 0)
+	if (game->characters[2] == 0){
+		if (game->characters)
+			free(game->characters);
 		throw_error("No player was found!", game);
-	if (game->characters[2] != 1)
+	}
+	if (game->characters[2] != 1){
+		if (game->characters)
+			free(game->characters);
 		throw_error("You need to put exactly one player on the map.", game);
+	}
+	if (game->characters)
+		free(game->characters);
 	game->map.coordinates[(int)(game->player_pos.x)]
 	[(int)(game->player_pos.y)] = '0';
 }

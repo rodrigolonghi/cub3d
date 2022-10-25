@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 23:14:15 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:26:44 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	key_hook(int key, void *param, int key_type)
 
 	game = (t_game *)param;
 	// printf("keyhook = %d, keytype = %d \n", key, key_type);
-	if (key == ESC)
+	if (key == ESC && key_type == PRESS)
 		close_game(game);
 	else if (key_type == PRESS)
 		key_press(key, game);
