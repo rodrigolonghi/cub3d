@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 21:54:27 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:33:04 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	free_game(t_game *game)
 	int	i;
 
 	i = 0;
-	if (game->characters)
-		free(game->characters);
+	// if (game->characters)
+	// 	free(game->characters);
 	if (game->map.coordinates)
 	{
 		while (i < game->map.rows)
