@@ -3,100 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/24 22:33:37 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/26 20:27:14 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	check_map_characters2(char *aux, int *rows_n_cols, t_game *game)
+static void	save_player(t_game *game, int rows, int cols)
 {
-	if (aux[rows_n_cols[1]] == '0')
-		game->characters[0]++;
-	else if (aux[rows_n_cols[1]] == '1')
-		game->characters[1]++;
-	else if (aux[rows_n_cols[1]] == 'N' || aux[rows_n_cols[1]] == 'S'
-		|| aux[rows_n_cols[1]] == 'E' || aux[rows_n_cols[1]] == 'W')
+	game->player_pos = create_vector(rows + 0.5, cols + 0.5);
+	game->player_dir = create_vector(0.0, -1.0);
+	game->camera_plane = create_vector(0.66, 0.0);
+	if (game->map.coordinates[rows][cols] == 'N')
 	{
-		// game->map_pos = create_vector(rows_n_cols[1], rows_n_cols[0]);
-		game->player_pos = create_vector(rows_n_cols[0] + 0.5, rows_n_cols[1] + 0.5);
-		game->player_dir = create_vector(0.0, -1.0);
-		game->camera_plane = create_vector(0.66, 0.0);
-		if (aux[rows_n_cols[1]] == 'N')
-		{
-			game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, 1);
-			game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, 1);
-		}
-		else if (aux[rows_n_cols[1]] == 'S')
-		{
-			game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, -1);
-			game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, -1);
-		}
-		else if (aux[rows_n_cols[1]] == 'W')
-		{
-			game->player_dir = vector_rotation(game->player_dir, 0, -1);
-			game->camera_plane = vector_rotation(game->camera_plane, 0, -1);
-		}
-		else if (aux[rows_n_cols[1]] == 'E')
-		{
-			game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
-			game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
-		}
-		game->characters[2]++;
+		game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, 1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, 1);
 	}
-	else
-		return (1);
-	return (0);
+	else if (game->map.coordinates[rows][cols] == 'S')
+	{
+		game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, -1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, -1);
+	}
+	else if (game->map.coordinates[rows][cols] == 'W')
+	{
+		game->player_dir = vector_rotation(game->player_dir, 0, -1);
+		game->camera_plane = vector_rotation(game->camera_plane, 0, -1);
+	}
+	else if (game->map.coordinates[rows][cols] == 'E')
+	{
+		game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
+	}
 }
 
-static void	check_map_characters(t_game *game)
+static int	is_valid_cell(t_game *game, int rows, int cols)
 {
-	int	*rows_n_cols;
-	int	error;
+	if (rows < 0 || rows > (game->map.rows - 1)
+		|| cols < 0 || cols > (game->map.cols - 1))
+		return (FALSE);
+	return (TRUE);
+}
 
-	rows_n_cols = ft_calloc(2, sizeof(int));
-	while (rows_n_cols[0] < game->map.rows)
+static void	check_surroundings(t_game *game, int rows, int cols)
+{
+	int		col_offset;
+	int		row_offset;
+
+	row_offset = -1;
+	while (row_offset <= 1)
 	{
-		rows_n_cols[1] = 0;
-		while (rows_n_cols[1] < game->map.cols)
+		col_offset = -1;
+		while (col_offset <= 1)
 		{
-			error = check_map_characters2(game->map.coordinates[rows_n_cols[0]],
-					rows_n_cols, game);
-			if (error)
+			if (is_valid_cell(game, rows + row_offset, cols + col_offset))
 			{
-				free(rows_n_cols);
-				throw_error("Invalid character on map", game);
+				if (!(game->map.coordinates[rows + row_offset]
+						[cols + col_offset] == ' ')
+					&& !(game->map.coordinates[rows + row_offset]
+						[cols + col_offset] == '1'))
+					throw_error("Invalid map!2", game);
 			}
-			rows_n_cols[1]++;
+			col_offset++;
 		}
-		rows_n_cols[0]++;
+		row_offset++;
 	}
-	free(rows_n_cols);
 }
 
-static void	check_map_walls(t_game *game, char *map)
+static void	check_edges(t_game *game, char cell)
+{
+	if (cell == ' ' || cell == '1')
+		return ;
+	else
+		throw_error("Invalid map!1", game);
+}
+
+static int	is_edge(t_game *game, int rows, int cols)
+{
+	if (rows == 0 || cols == 0
+		|| rows == game->map.rows - 1 || cols == game->map.cols - 1)
+		return (TRUE);
+	return (FALSE);
+}
+
+static void	check_map_walls(t_game *game)
+{
+	int	rows;
+	int	cols;
+
+	rows = 0;
+	while (rows <= game->map.rows)
+	{
+		cols = 0;
+		while (cols <= game->map.cols)
+		{
+			if (is_edge(game, rows, cols))
+				check_edges(game, game->map.coordinates[rows][cols]);
+			if (game->map.coordinates[rows][cols] == ' ')
+				check_surroundings(game, rows, cols);
+			else if (ft_strchr("NSWE", game->map.coordinates[rows][cols]))
+				save_player(game, rows, cols);
+			else if (!ft_strchr("01", game->map.coordinates[rows][cols]))
+				throw_error("Invalid character on map", game);
+			cols++;
+		}
+		rows++;
+	}
+}
+
+static void	save_map(t_game *game, char *map)
 {
 	int		fd;
 	int		rows;
-	int		cols;
 
 	rows = 0;
 	fd = open_fd(map);
-	while (rows < game->map.rows)
+	while (rows <= game->map.rows)
 	{
 		get_next_line(fd, &game->map.coordinates[rows]);
-		cols = 0;
-		while (cols < game->map.cols)
-		{
-			if ((cols == 0 || cols == game->map.cols - 1
-					|| rows == 0 || rows == game->map.rows - 1)
-				&& game->map.coordinates[rows][cols] != '1')
-				throw_error("Map must be closed/surrounded by walls", game);
-			cols++;
-		}
 		rows++;
 	}
 	close(fd);
@@ -108,50 +134,56 @@ static void	count_map_size(t_game *game, char *map)
 	char	*aux;
 
 	game->map.rows = 0;
-	game->map.cols = -1;
+	game->map.cols = 0;
 	fd = open_fd(map);
 	while (get_next_line(fd, &aux) == 1)
 	{
-		if (game->map.cols == -1)
-			game->map.cols = (int) ft_strlen(aux);
-		else if (game->map.cols != (int) ft_strlen(aux))
-		{
-			game->map.cols = -1;
-			break ;
-		}
+		if (ft_strlen(aux) > game->map.cols)
+			game->map.cols = ft_strlen(aux);
 		game->map.rows++;
 		if (aux != NULL)
 			free(aux);
 	}
-	if (game->map.cols != (int) ft_strlen(aux) && game->map.cols != -1)
-		game->map.cols = -1;
-	if (game->map.cols <= 0 || game->map.rows <= 0)
-		throw_error("Map must be rectangular", game);
 	game->map.rows++;
 	if (aux != NULL)
 		free(aux);
 	close(fd);
 }
 
+static void	validate_player(t_game *game)
+{
+	int	rows;
+	int	cols;
+	int	has_player;
+
+	has_player = 0;
+	rows = 0;
+	while (rows <= game->map.rows)
+	{
+		cols = 0;
+		while (cols <= game->map.cols)
+		{
+			if (ft_strchr("NSWE", game->map.coordinates[rows][cols]))
+				has_player++;
+			cols++;
+		}
+		rows++;
+	}
+	if (!has_player)
+		throw_error("No player was found!", game);
+	if (has_player > 1)
+		throw_error("You need to put exactly one player on the map.", game);
+}
+
 void	check_map(t_game *game, char *map)
 {
-	game->characters = ft_calloc(3, sizeof(int));
 	count_map_size(game, map);
-	game->map.coordinates = malloc(sizeof(char *) * game->map.rows);
-	check_map_walls(game, map);
-	check_map_characters(game);
-	if (game->characters[2] == 0){
-		if (game->characters)
-			free(game->characters);
-		throw_error("No player was found!", game);
-	}
-	if (game->characters[2] != 1){
-		if (game->characters)
-			free(game->characters);
-		throw_error("You need to put exactly one player on the map.", game);
-	}
-	if (game->characters)
-		free(game->characters);
+	if (game->map.rows < 3 || game->map.cols < 3)
+		throw_error("Invalid map!", game);
+	game->map.coordinates = ft_calloc(game->map.rows + 1, sizeof(char *));
+	save_map(game, map);
+	check_map_walls(game);
+	validate_player(game);
 	game->map.coordinates[(int)(game->player_pos.x)]
 	[(int)(game->player_pos.y)] = '0';
 }
