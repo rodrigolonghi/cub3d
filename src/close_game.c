@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/24 22:33:04 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:40:33 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ static void	free_game(t_game *game)
 			i++;
 		}
 		free(game->map.coordinates);
+	}
+	if (game->temp_map.coordinates)
+	{
+		while (i < game->temp_map.rows)
+		{
+			free(game->temp_map.coordinates[i]);
+			i++;
+		}
+		free(game->temp_map.coordinates);
 	}
 	if (game->mlx)
 	{

@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 22:09:11 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/26 23:01:10 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ static void	save_player(t_game *game, int rows, int cols)
 	game->camera_plane = create_vector(0.66, 0.0);
 	if (game->map.coordinates[rows][cols] == 'N')
 	{
-		game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, 1);
-		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, 1);
+		game->player_dir = vector_rotation(game->player_dir, 0, 1);
+		game->camera_plane = vector_rotation(game->camera_plane, 0, 1);
 	}
 	else if (game->map.coordinates[rows][cols] == 'S')
 	{
-		game->player_dir = vector_rotation(game->player_dir, M_PI / 2.0, -1);
-		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2.0, -1);
+		game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
 	}
 	else if (game->map.coordinates[rows][cols] == 'W')
 	{
-		game->player_dir = vector_rotation(game->player_dir, 0, -1);
-		game->camera_plane = vector_rotation(game->camera_plane, 0, -1);
+		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, 1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, 1);
 	}
 	else if (game->map.coordinates[rows][cols] == 'E')
 	{
-		game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
-		game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
+		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, -1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, -1);
 	}
 }
 
@@ -119,15 +119,36 @@ static void	save_map(t_game *game, char *map)
 {
 	int		fd;
 	int		rows;
+	int		cols;
 
 	rows = 0;
 	fd = open_fd(map);
-	while (rows <= game->map.rows)
+	while (rows <= game->temp_map.rows)
 	{
-		get_next_line(fd, &game->map.coordinates[rows]);
+		get_next_line(fd, &game->temp_map.coordinates[rows]);
 		rows++;
 	}
 	close(fd);
+	game->map.cols = game->temp_map.rows;
+	game->map.rows = game->temp_map.cols;
+	cols = 0;
+	while (cols < game->temp_map.cols)
+	{
+		game->map.coordinates[cols] = ft_calloc(game->map.rows + 1, sizeof(char));
+		cols++;
+	}
+	rows = 0;
+	while (rows < game->temp_map.rows)
+	{
+		cols = 0;
+		while (game->temp_map.coordinates[rows][cols] && cols < game->temp_map.cols)
+		{
+			printf("col = %d, row = %d\n", cols, rows);
+			game->map.coordinates[cols][rows] = game->temp_map.coordinates[rows][cols];
+			cols++;
+		}
+		rows++;
+	}
 }
 
 static void	count_map_size(t_game *game, char *map)
@@ -135,18 +156,18 @@ static void	count_map_size(t_game *game, char *map)
 	int		fd;
 	char	*aux;
 
-	game->map.rows = 0;
-	game->map.cols = 0;
+	game->temp_map.rows = 0;
+	game->temp_map.cols = 0;
 	fd = open_fd(map);
 	while (get_next_line(fd, &aux) == 1)
 	{
-		if (ft_strlen(aux) > game->map.cols)
-			game->map.cols = ft_strlen(aux);
-		game->map.rows++;
+		if (ft_strlen(aux) > game->temp_map.cols)
+			game->temp_map.cols = ft_strlen(aux);
+		game->temp_map.rows++;
 		if (aux != NULL)
 			free(aux);
 	}
-	game->map.rows++;
+	game->temp_map.rows++;
 	if (aux != NULL)
 		free(aux);
 	close(fd);
@@ -181,9 +202,10 @@ static void	validate_player(t_game *game)
 void	check_map(t_game *game, char *map)
 {
 	count_map_size(game, map);
-	if (game->map.rows < 3 || game->map.cols < 3)
+	if (game->temp_map.rows < 3 || game->temp_map.cols < 3)
 		throw_error("Invalid map!", game);
-	game->map.coordinates = ft_calloc(game->map.rows + 1, sizeof(char *));
+	game->temp_map.coordinates = ft_calloc(game->temp_map.rows + 1, sizeof(char *));
+	game->map.coordinates = ft_calloc(game->temp_map.cols + 1, sizeof(char *));
 	save_map(game, map);
 	check_map_walls(game);
 	validate_player(game);

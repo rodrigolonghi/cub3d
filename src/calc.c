@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 23:09:24 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:59:05 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	while (j < end)
 	{
 		// printf("i = %d, j = %d\n", i, j);
-		game->map.pixel_map[WIDTH - i][j] = encode_rgb(wall_color);
+		game->map.pixel_map[i][j] = encode_rgb(wall_color);
 		j++;
 	}
 }

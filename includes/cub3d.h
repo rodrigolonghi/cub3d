@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/19 23:14:24 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:32:25 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_game
 	t_sprite	we;
 	t_sprite	ea;
 	t_map		map;
+	t_map		temp_map;
 	t_vec		player_pos;
 	t_vec		player_dir;
 	double		x_walk;
