@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 20:27:14 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:09:11 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static void	check_surroundings(t_game *game, int rows, int cols)
 				if (!(game->map.coordinates[rows + row_offset]
 						[cols + col_offset] == ' ')
 					&& !(game->map.coordinates[rows + row_offset]
-						[cols + col_offset] == '1'))
-					throw_error("Invalid map!2", game);
+						[cols + col_offset] == '1')
+					&& !(game->map.coordinates[rows + row_offset]
+						[cols + col_offset] == '\0'))
+					throw_error("Invalid map!", game);
 			}
 			col_offset++;
 		}
@@ -77,7 +79,7 @@ static void	check_edges(t_game *game, char cell)
 	if (cell == ' ' || cell == '1')
 		return ;
 	else
-		throw_error("Invalid map!1", game);
+		throw_error("Invalid map!", game);
 }
 
 static int	is_edge(t_game *game, int rows, int cols)
@@ -94,10 +96,10 @@ static void	check_map_walls(t_game *game)
 	int	cols;
 
 	rows = 0;
-	while (rows <= game->map.rows)
+	while (rows < game->map.rows)
 	{
 		cols = 0;
-		while (cols <= game->map.cols)
+		while (game->map.coordinates[rows][cols] && cols < game->map.cols)
 		{
 			if (is_edge(game, rows, cols))
 				check_edges(game, game->map.coordinates[rows][cols]);
@@ -158,12 +160,13 @@ static void	validate_player(t_game *game)
 
 	has_player = 0;
 	rows = 0;
-	while (rows <= game->map.rows)
+	while (rows < game->map.rows)
 	{
 		cols = 0;
-		while (cols <= game->map.cols)
+		while (cols < game->map.cols)
 		{
-			if (ft_strchr("NSWE", game->map.coordinates[rows][cols]))
+			if (game->map.coordinates[rows][cols] && ft_strchr("NSWE",
+				game->map.coordinates[rows][cols]))
 				has_player++;
 			cols++;
 		}
