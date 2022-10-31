@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 23:01:10 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/31 04:48:32 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 static void	save_player(t_game *game, int rows, int cols)
 {
-	game->player_pos = create_vector(rows + 0.5, cols + 0.5);
+	game->player_pos = create_vector(cols + 0.5, rows + 0.5);
 	game->player_dir = create_vector(0.0, -1.0);
 	game->camera_plane = create_vector(0.66, 0.0);
-	if (game->map.coordinates[rows][cols] == 'N')
+	if (game->map.coordinates[cols][rows] == 'N')
 	{
 		game->player_dir = vector_rotation(game->player_dir, 0, 1);
 		game->camera_plane = vector_rotation(game->camera_plane, 0, 1);
 	}
-	else if (game->map.coordinates[rows][cols] == 'S')
+	else if (game->map.coordinates[cols][rows] == 'S')
 	{
 		game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
 		game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
 	}
-	else if (game->map.coordinates[rows][cols] == 'W')
+	else if (game->map.coordinates[cols][rows] == 'W')
 	{
 		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, 1);
 		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, 1);
 	}
-	else if (game->map.coordinates[rows][cols] == 'E')
+	else if (game->map.coordinates[cols][rows] == 'E')
 	{
 		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, -1);
 		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, -1);
@@ -141,10 +141,9 @@ static void	save_map(t_game *game, char *map)
 	while (rows < game->temp_map.rows)
 	{
 		cols = 0;
-		while (game->temp_map.coordinates[rows][cols] && cols < game->temp_map.cols)
+		while (cols < game->temp_map.cols)
 		{
-			printf("col = %d, row = %d\n", cols, rows);
-			game->map.coordinates[cols][rows] = game->temp_map.coordinates[rows][cols];
+			game->map.coordinates[game->temp_map.rows - 1 - cols][rows] = game->temp_map.coordinates[rows][cols];
 			cols++;
 		}
 		rows++;
@@ -209,6 +208,9 @@ void	check_map(t_game *game, char *map)
 	save_map(game, map);
 	check_map_walls(game);
 	validate_player(game);
-	game->map.coordinates[(int)(game->player_pos.x)]
-	[(int)(game->player_pos.y)] = '0';
+	for (int i = 0; i < game->map.rows; i++)
+		printf("%s         %s\n", game->temp_map.coordinates[i], game->map.coordinates[i]);
+	game->map.coordinates[(int)(game->player_pos.y)]
+	[(int)(game->player_pos.x)] = '0';
+	printf("player pos - [%f][%f]\n", game->player_pos.x, game->player_pos.y);
 }
