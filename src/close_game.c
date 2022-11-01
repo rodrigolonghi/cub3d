@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 22:40:33 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:42:28 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@ static void	free_game(t_game *game)
 			i++;
 		}
 		free(game->map.coordinates);
-	}
-	if (game->temp_map.coordinates)
-	{
-		while (i < game->temp_map.rows)
-		{
-			free(game->temp_map.coordinates[i]);
-			i++;
-		}
-		free(game->temp_map.coordinates);
 	}
 	if (game->mlx)
 	{

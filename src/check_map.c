@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 04:48:32 by coder            ###   ########.fr       */
+/*   Updated: 2022/10/31 21:41:51 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,37 +117,17 @@ static void	check_map_walls(t_game *game)
 
 static void	save_map(t_game *game, char *map)
 {
-	int		fd;
-	int		rows;
-	int		cols;
+	int	fd;
+	int	rows;
 
 	rows = 0;
 	fd = open_fd(map);
-	while (rows <= game->temp_map.rows)
+	while (rows <= game->map.rows)
 	{
-		get_next_line(fd, &game->temp_map.coordinates[rows]);
+		get_next_line(fd, &game->map.coordinates[rows]);
 		rows++;
 	}
 	close(fd);
-	game->map.cols = game->temp_map.rows;
-	game->map.rows = game->temp_map.cols;
-	cols = 0;
-	while (cols < game->temp_map.cols)
-	{
-		game->map.coordinates[cols] = ft_calloc(game->map.rows + 1, sizeof(char));
-		cols++;
-	}
-	rows = 0;
-	while (rows < game->temp_map.rows)
-	{
-		cols = 0;
-		while (cols < game->temp_map.cols)
-		{
-			game->map.coordinates[game->temp_map.rows - 1 - cols][rows] = game->temp_map.coordinates[rows][cols];
-			cols++;
-		}
-		rows++;
-	}
 }
 
 static void	count_map_size(t_game *game, char *map)
@@ -155,18 +135,18 @@ static void	count_map_size(t_game *game, char *map)
 	int		fd;
 	char	*aux;
 
-	game->temp_map.rows = 0;
-	game->temp_map.cols = 0;
+	game->map.rows = 0;
+	game->map.cols = 0;
 	fd = open_fd(map);
 	while (get_next_line(fd, &aux) == 1)
 	{
-		if (ft_strlen(aux) > game->temp_map.cols)
-			game->temp_map.cols = ft_strlen(aux);
-		game->temp_map.rows++;
+		if (ft_strlen(aux) > game->map.cols)
+			game->map.cols = ft_strlen(aux);
+		game->map.rows++;
 		if (aux != NULL)
 			free(aux);
 	}
-	game->temp_map.rows++;
+	game->map.rows++;
 	if (aux != NULL)
 		free(aux);
 	close(fd);
@@ -201,15 +181,14 @@ static void	validate_player(t_game *game)
 void	check_map(t_game *game, char *map)
 {
 	count_map_size(game, map);
-	if (game->temp_map.rows < 3 || game->temp_map.cols < 3)
+	if (game->map.rows < 3 || game->map.cols < 3)
 		throw_error("Invalid map!", game);
-	game->temp_map.coordinates = ft_calloc(game->temp_map.rows + 1, sizeof(char *));
-	game->map.coordinates = ft_calloc(game->temp_map.cols + 1, sizeof(char *));
+	game->map.coordinates = ft_calloc(game->map.rows + 1, sizeof(char *));
 	save_map(game, map);
 	check_map_walls(game);
 	validate_player(game);
 	for (int i = 0; i < game->map.rows; i++)
-		printf("%s         %s\n", game->temp_map.coordinates[i], game->map.coordinates[i]);
+		printf("%s\n", game->map.coordinates[i]);
 	game->map.coordinates[(int)(game->player_pos.y)]
 	[(int)(game->player_pos.x)] = '0';
 	printf("player pos - [%f][%f]\n", game->player_pos.x, game->player_pos.y);
