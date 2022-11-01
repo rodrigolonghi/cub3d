@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 22:59:05 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/10/31 22:04:03 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	calculate_current_ray(t_game *game, int i)
 	game->ray_dir = vector_add(game->player_dir, game->camera_pixel);
 	// printf("i2 = %d ", i);
 	// printf("mul = %f ", game->multiplier);
-	// printf("pDir = [%f, %f] ", game->player_dir.x, game->player_dir.y);
+	// printf("pDir = [%f, %f] \n", game->player_dir.x, game->player_dir.y);
 	// printf("cpx = [%f, %f] ", game->camera_pixel.x, game->camera_pixel.y);
 	// printf("rayDir = [%f, %f] ", game->ray_dir.x, game->ray_dir.y);
 }
@@ -115,8 +115,8 @@ static void	execute_dda(t_game *game)
 			dda_line_size_y += game->delta_dist_y;
 			game->hit_side = 1;
 		}
-		if (game->map.coordinates[(int)(game->hit_pos.x)]
-			[(int)(game->hit_pos.y)] != '0')
+		if (game->map.coordinates[(int)(game->hit_pos.y)]
+			[(int)(game->hit_pos.x)] != '0')
 			hit = 1;
 	}
 }

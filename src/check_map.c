@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 21:41:51 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/10/31 22:05:25 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,27 @@ static void	save_player(t_game *game, int rows, int cols)
 	game->player_pos = create_vector(cols + 0.5, rows + 0.5);
 	game->player_dir = create_vector(0.0, -1.0);
 	game->camera_plane = create_vector(0.66, 0.0);
-	if (game->map.coordinates[cols][rows] == 'N')
+	if (game->map.coordinates[rows][cols] == 'N')
 	{
 		game->player_dir = vector_rotation(game->player_dir, 0, 1);
 		game->camera_plane = vector_rotation(game->camera_plane, 0, 1);
 	}
-	else if (game->map.coordinates[cols][rows] == 'S')
+	else if (game->map.coordinates[rows][cols] == 'S')
 	{
-		game->player_dir = vector_rotation(game->player_dir, M_PI, -1);
-		game->camera_plane = vector_rotation(game->camera_plane, M_PI, -1);
+		game->player_dir = vector_rotation(game->player_dir, M_PI, 1);
+		game->camera_plane = vector_rotation(game->camera_plane, M_PI, 1);
 	}
-	else if (game->map.coordinates[cols][rows] == 'W')
+	else if (game->map.coordinates[rows][cols] == 'W')
 	{
 		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, 1);
 		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, 1);
 	}
-	else if (game->map.coordinates[cols][rows] == 'E')
+	else if (game->map.coordinates[rows][cols] == 'E')
 	{
 		game->player_dir = vector_rotation(game->player_dir, M_PI / 2, -1);
 		game->camera_plane = vector_rotation(game->camera_plane, M_PI / 2, -1);
 	}
+	printf("pDir = [%f, %f] \n", game->player_dir.x, game->player_dir.y);
 }
 
 static int	is_valid_cell(t_game *game, int rows, int cols)
