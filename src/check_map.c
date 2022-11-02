@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 22:05:25 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:53:52 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,8 @@ static void	save_map(t_game *game, char *map)
 
 	rows = 0;
 	fd = open_fd(map);
-	while (rows <= game->map.rows)
+	while (get_next_line(fd, &game->map.coordinates[rows]) == 1)
 	{
-		get_next_line(fd, &game->map.coordinates[rows]);
 		rows++;
 	}
 	close(fd);

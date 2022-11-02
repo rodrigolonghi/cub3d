@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/01 21:26:25 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:44:19 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 		wall_height = (double)(HEIGHT) / game->perp_dist;
 	wall_start_y = (double)(HEIGHT) / 2.0 - wall_height / 2.0;
 	wall_end_y = (double)(HEIGHT) / 2.0 + wall_height / 2.0;
-	printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
+	// printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
 	if (wall_start_y < wall_end_y)
 	{
 		j = (int)(wall_start_y);
