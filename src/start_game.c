@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 22:54:09 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:28:25 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	initiate(t_game *game)
 	game->rotation = 0;
 	game->x_walk = 0.0;
 	game->y_walk = 0.0;
-	game->dist_wall = 1.0;
+	game->dist_wall = 0.0;
 }
 
 static void	start_win(t_game *game)
