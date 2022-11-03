@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 21:40:41 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/03 00:01:45 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	int			win_heigh;
+	int			win_width;
 	t_color		ceilling;
 	t_color		floor;
 	t_sprite	no;
@@ -108,7 +110,7 @@ typedef struct s_game
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
 void	throw_error(char *e, t_game *game);
-void	check_params(int argc, char *argv[]);
+void	check_params(t_game *game, int argc, char *argv[]);
 int		open_fd(char *file);
 void	check_map(t_game *game, char *map);
 t_color	create_color(double r, double g, double b);

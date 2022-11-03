@@ -1,3 +1,11 @@
+NO ./assets/blue.xpm
+SO ./assets/brown.xpm
+WE ./assets/orange.xpm
+EA ./assets/yellow.xpm
+
+F 110,110,110
+C 0,0,255
+
 1111111111
 1100110001
 1000000101
