@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 21:42:28 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:16:41 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,22 @@ static void	free_game(t_game *game)
 	i = 0;
 	// if (game->characters)
 	// 	free(game->characters);
+	if (game->no.addr != NULL)
+		free(game->no.addr);
+	if (game->so.addr != NULL)
+		free(game->so.addr);
+	if (game->ea.addr != NULL)
+		free(game->ea.addr);
+	if (game->we.addr != NULL)
+		free(game->we.addr);
+	if (game->no.img != NULL)
+		mlx_destroy_image(game->mlx, game->no.img);
+	if (game->so.img != NULL)
+		mlx_destroy_image(game->mlx, game->so.img);
+	if (game->ea.img != NULL)
+		mlx_destroy_image(game->mlx, game->ea.img);
+	if (game->we.img != NULL)
+		mlx_destroy_image(game->mlx, game->we.img);
 	if (game->map.coordinates)
 	{
 		while (i < game->map.rows)

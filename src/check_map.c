@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/01 21:53:52 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:39:25 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+static int	map_started(char *line)
+{
+	int	aux;
+
+	if (ft_strlen(line) == 0)
+		return (FALSE);
+	aux = 0;
+	while (line[aux])
+	{
+		if (!ft_strchr(" 01NSWE", line[aux]))
+			return (FALSE);
+		aux++;
+	}
+	return (TRUE);
+}
 
 static void	save_player(t_game *game, int rows, int cols)
 {
@@ -118,15 +134,24 @@ static void	check_map_walls(t_game *game)
 
 static void	save_map(t_game *game, char *map)
 {
-	int	fd;
-	int	rows;
+	int		fd;
+	int		rows;
+	char	*aux;
 
-	rows = 0;
 	fd = open_fd(map);
-	while (get_next_line(fd, &game->map.coordinates[rows]) == 1)
+	while (get_next_line(fd, &aux) == 1 && !map_started(aux))
 	{
-		rows++;
+		if (aux != NULL)
+			free(aux);
 	}
+	if (aux != NULL)
+	{
+		game->map.coordinates[0] = ft_strdup(aux);
+		free(aux);
+	}
+	rows = 1;
+	while (get_next_line(fd, &game->map.coordinates[rows]) == 1)
+		rows++;
 	close(fd);
 }
 
@@ -140,6 +165,12 @@ static void	count_map_size(t_game *game, char *map)
 	fd = open_fd(map);
 	while (get_next_line(fd, &aux) == 1)
 	{
+		if (game->map.rows == 0 && !map_started(aux))
+		{
+			if (aux != NULL)
+				free(aux);
+			continue ;
+		}
 		if (ft_strlen(aux) > game->map.cols)
 			game->map.cols = ft_strlen(aux);
 		game->map.rows++;

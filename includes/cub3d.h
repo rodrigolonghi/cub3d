@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/31 21:40:41 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:20:35 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define FALSE			0
 # define PRESS			0
 # define RELEASE		1
+# define IMG_SIZE		60
 
 typedef struct s_vec
 {
@@ -54,9 +55,6 @@ typedef struct s_sprite
 	char	*addr;
 	int		width;
 	int		height;
-	int		bpp;
-	int		line_length;
-	int		endian;
 }	t_sprite;
 
 typedef struct s_color
@@ -108,7 +106,7 @@ typedef struct s_game
 void	start_game(t_game *game, int argc, char *argv[]);
 int		close_game(t_game *game);
 void	throw_error(char *e, t_game *game);
-void	check_params(int argc, char *argv[]);
+void	check_params(t_game *game, int argc, char *argv[]);
 int		open_fd(char *file);
 void	check_map(t_game *game, char *map);
 t_color	create_color(double r, double g, double b);
