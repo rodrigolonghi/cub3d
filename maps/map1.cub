@@ -3,8 +3,8 @@ SO ./assets/brown.xpm
 WE ./assets/orange.xpm
 EA ./assets/yellow.xpm
 
-F 110,110,110
-C 0,0,255
+F 130,130,130
+C 190,190,255
 
 1111111111
 1100110001
