@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 00:07:10 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:19:00 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,13 @@ static void	get_file_data(t_game *game, int fd)
 	}
 	else if (error)
 	{
-		while (get_next_line(fd, &aux))
+		while (get_next_line(fd, &aux) == 1)
 		{
 			if (aux != NULL)
 				free(aux);
 		}
+		if (aux != NULL)
+			free(aux);
 	}
 }
 
@@ -165,10 +167,11 @@ int	open_fd(char *file)
 
 static void	validade_file_data(t_game *g)
 {
-	g->no.img = mlx_xpm_file_to_image(g->mlx, g->no.addr, &g->win_width, &g->win_heigh);
-	g->so.img = mlx_xpm_file_to_image(g->mlx, g->so.addr, &g->win_width, &g->win_heigh);
-	g->ea.img = mlx_xpm_file_to_image(g->mlx, g->ea.addr, &g->win_width, &g->win_heigh);
-	g->we.img = mlx_xpm_file_to_image(g->mlx, g->we.addr, &g->win_width, &g->win_heigh);
+	printf("no.addr = '%s'\n", g->no.addr);
+	g->no.img = mlx_xpm_file_to_image(g->mlx, g->no.addr, &g->no.width, &g->no.height);
+	g->so.img = mlx_xpm_file_to_image(g->mlx, g->so.addr, &g->so.width, &g->so.height);
+	g->ea.img = mlx_xpm_file_to_image(g->mlx, g->ea.addr, &g->ea.width, &g->ea.height);
+	g->we.img = mlx_xpm_file_to_image(g->mlx, g->we.addr, &g->we.width, &g->we.height);
 	if (g->floor.r > 255 || g->floor.r < 0 || g->floor.g > 255 || g->floor.g < 0
 		|| g->floor.b > 255 || g->floor.b < 0 || g->ceilling.r > 255
 		|| g->ceilling.r < 0 || g->ceilling.g > 255 || g->ceilling.g < 0

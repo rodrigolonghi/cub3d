@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 00:01:45 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:20:35 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define FALSE			0
 # define PRESS			0
 # define RELEASE		1
+# define IMG_SIZE		60
 
 typedef struct s_vec
 {
@@ -54,9 +55,6 @@ typedef struct s_sprite
 	char	*addr;
 	int		width;
 	int		height;
-	int		bpp;
-	int		line_length;
-	int		endian;
 }	t_sprite;
 
 typedef struct s_color
@@ -70,8 +68,6 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	int			win_heigh;
-	int			win_width;
 	t_color		ceilling;
 	t_color		floor;
 	t_sprite	no;
