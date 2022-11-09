@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 22:21:39 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:10:05 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ static void	initiate(t_game *game)
 	game->x_walk = 0.0;
 	game->y_walk = 0.0;
 	game->dist_wall = 0.0;
-	game->no.addr = NULL;
-	game->so.addr = NULL;
-	game->we.addr = NULL;
-	game->ea.addr = NULL;
+	game->texture = malloc(4 * sizeof(t_texture));
+	game->texture[0].addr = NULL;
+	game->texture[1].addr = NULL;
+	game->texture[2].addr = NULL;
+	game->texture[3].addr = NULL;
 	game->ceilling.r = -1;
 	game->floor.r = -1;
 }

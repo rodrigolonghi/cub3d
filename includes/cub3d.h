@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 21:07:01 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:49:50 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ typedef struct s_data
 }	t_data;
 
 
-typedef struct s_sprite
+typedef struct s_texture
 {
 	t_data	img;
 	char	*addr;
 	int		width;
 	int		height;
-}	t_sprite;
+}	t_texture;
 
 typedef struct s_color
 {
@@ -80,10 +80,7 @@ typedef struct s_game
 	void		*win;
 	t_color		ceilling;
 	t_color		floor;
-	t_sprite	no;
-	t_sprite	so;
-	t_sprite	we;
-	t_sprite	ea;
+	t_texture	*texture;
 	t_map		map;
 	t_vec		player_pos;
 	t_vec		player_dir;

@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 20:22:01 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:20:34 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ static void	free_game(t_game *game)
 	i = 0;
 	// if (game->characters)
 	// 	free(game->characters);
-	if (game->no.addr != NULL)
-		free(game->no.addr);
-	if (game->so.addr != NULL)
-		free(game->so.addr);
-	if (game->ea.addr != NULL)
-		free(game->ea.addr);
-	if (game->we.addr != NULL)
-		free(game->we.addr);
-	if (game->no.img.ptr != NULL)
-		mlx_destroy_image(game->mlx, game->no.img.ptr);
-	if (game->so.img.ptr != NULL)
-		mlx_destroy_image(game->mlx, game->so.img.ptr);
-	if (game->ea.img.ptr != NULL)
-		mlx_destroy_image(game->mlx, game->ea.img.ptr);
-	if (game->we.img.ptr != NULL)
-		mlx_destroy_image(game->mlx, game->we.img.ptr);
+	if (game->texture != NULL)
+	{
+		while (i < 4)
+		{
+			if (game->texture[i].addr != NULL)
+				free(game->texture[i].addr);
+			if (game->texture[i].img.ptr != NULL)
+				mlx_destroy_image(game->mlx, game->texture[i].img.ptr);
+			i++;
+		}
+		free(game->texture);
+	}
+	i = 0;
 	if (game->map.coordinates)
 	{
 		while (i < game->map.rows)

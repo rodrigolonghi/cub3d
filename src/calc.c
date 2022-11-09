@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 21:43:49 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 22:17:07 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,22 +140,31 @@ static int	calculate_wall_texture(t_game *game, int i, int j)
 	double	wall_x;
 	int		tex_x;
 	double	wall_y;
+	int		t;
 
 	if(i == j){
 		
 	}
+	if (game->hit_side == 1 && game->ray_dir.y < 0)
+		t = 0;
+	else if (game->hit_side == 1 && game->ray_dir.y > 0)
+		t = 1;
+	else if (game->hit_side == 0 && game->ray_dir.x < 0)
+		t = 2;
+	else if (game->hit_side == 0 && game->ray_dir.x > 0)
+		t = 3;
 	if (!game->hit_side)
 		wall_x = game->player_pos.y + game->perp_dist * game->ray_dir.y;
 	else
 		wall_x = game->player_pos.x + game->perp_dist * game->ray_dir.x;
 	wall_x -= (int)wall_x;
-	tex_x = (int)(wall_x * (double)game->no.width);
-	wall_y =  (double)game->no.height * (j - (int)game->wall_start_y) / game->wall_height;
-	printf("[%d][%d] wall_x = %f tex_x = %d wall_y = %f wall_height = %f ", i, j, wall_x, tex_x, wall_y, game->wall_height);
-	// return (*(unsigned int *)(game->so.img.data) + (wall_y * game->no.img.line_length + wall_x * (game->no.img.bits_per_pixel / 8)));
-	return (*(unsigned int *)(game->no.img.data
-		+ ((int)wall_y * game->no.img.line_length + (int)tex_x
-			* (game->no.img.bits_per_pixel / 8))));
+	tex_x = (int)(wall_x * (double)game->texture[t].width);
+	wall_y =  (double)game->texture[t].height * (j - (int)game->wall_start_y) / game->wall_height;
+	// printf("[%d][%d] wall_x = %f tex_x = %d wall_y = %f wall_height = %f ", i, j, wall_x, tex_x, wall_y, game->wall_height);
+	// return (*(unsigned int *)(game->so.img.data) + (wall_y * game->texture[t].img.line_length + wall_x * (game->texture[t].img.bits_per_pixel / 8)));
+	return (*(unsigned int *)(game->texture[t].img.data
+		+ ((int)wall_y * game->texture[t].img.line_length + (int)tex_x
+			* (game->texture[t].img.bits_per_pixel / 8))));
 }
 
 static void	draw_wall(t_game *game, t_color wall_color, int i)
@@ -190,7 +199,7 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 	{
 		// printf("i = %d, j = %d\n", i, j);
 		color = calculate_wall_texture(game, i, j);
-		printf("color = %d\n ",color);
+		// printf("color = %d\n ",color);
 		// game->map.pixel_map[i][j] = encode_rgb(wall_color);
 		game->map.pixel_map[i][j] = color;
 		j++;
