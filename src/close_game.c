@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 22:16:41 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:22:01 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static void	free_game(t_game *game)
 		free(game->ea.addr);
 	if (game->we.addr != NULL)
 		free(game->we.addr);
-	if (game->no.img != NULL)
-		mlx_destroy_image(game->mlx, game->no.img);
-	if (game->so.img != NULL)
-		mlx_destroy_image(game->mlx, game->so.img);
-	if (game->ea.img != NULL)
-		mlx_destroy_image(game->mlx, game->ea.img);
-	if (game->we.img != NULL)
-		mlx_destroy_image(game->mlx, game->we.img);
+	if (game->no.img.ptr != NULL)
+		mlx_destroy_image(game->mlx, game->no.img.ptr);
+	if (game->so.img.ptr != NULL)
+		mlx_destroy_image(game->mlx, game->so.img.ptr);
+	if (game->ea.img.ptr != NULL)
+		mlx_destroy_image(game->mlx, game->ea.img.ptr);
+	if (game->we.img.ptr != NULL)
+		mlx_destroy_image(game->mlx, game->we.img.ptr);
 	if (game->map.coordinates)
 	{
 		while (i < game->map.rows)

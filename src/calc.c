@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/01 21:44:19 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:43:49 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,40 +135,69 @@ static void	calculate_perpendicular_dist(t_game *game)
 // 		game->perp_dist = game->dist_to_side_y - game->delta_dist_y;
 }
 
+static int	calculate_wall_texture(t_game *game, int i, int j)
+{
+	double	wall_x;
+	int		tex_x;
+	double	wall_y;
+
+	if(i == j){
+		
+	}
+	if (!game->hit_side)
+		wall_x = game->player_pos.y + game->perp_dist * game->ray_dir.y;
+	else
+		wall_x = game->player_pos.x + game->perp_dist * game->ray_dir.x;
+	wall_x -= (int)wall_x;
+	tex_x = (int)(wall_x * (double)game->no.width);
+	wall_y =  (double)game->no.height * (j - (int)game->wall_start_y) / game->wall_height;
+	printf("[%d][%d] wall_x = %f tex_x = %d wall_y = %f wall_height = %f ", i, j, wall_x, tex_x, wall_y, game->wall_height);
+	// return (*(unsigned int *)(game->so.img.data) + (wall_y * game->no.img.line_length + wall_x * (game->no.img.bits_per_pixel / 8)));
+	return (*(unsigned int *)(game->no.img.data
+		+ ((int)wall_y * game->no.img.line_length + (int)tex_x
+			* (game->no.img.bits_per_pixel / 8))));
+}
+
 static void	draw_wall(t_game *game, t_color wall_color, int i)
 {
-	double	wall_height;
-	double	wall_start_y;
-	double	wall_end_y;
 	int		j;
 	int		end;
-
+	int		color;
+	
+	if (wall_color.r == 0){
+		
+	}
 	if (fabs(game->perp_dist) < 1.0)
-		wall_height = (double)(HEIGHT);
+		game->wall_height = (double)(HEIGHT);
 	else
-		wall_height = (double)(HEIGHT) / game->perp_dist;
-	wall_start_y = (double)(HEIGHT) / 2.0 - wall_height / 2.0;
-	wall_end_y = (double)(HEIGHT) / 2.0 + wall_height / 2.0;
+		game->wall_height = (double)(HEIGHT) / game->perp_dist;
+	game->wall_start_y = (double)(HEIGHT) / 2.0 - game->wall_height / 2.0;
+	game->wall_end_y = (double)(HEIGHT) / 2.0 + game->wall_height / 2.0;
 	// printf("perp = %f,  wh = %f, start = %f, end = %f\n", game->perp_dist, wall_height, wall_start_y, wall_end_y);
-	if (wall_start_y < wall_end_y)
+	if (game->wall_start_y < game->wall_end_y)
 	{
-		j = (int)(wall_start_y);
-		end = (int)(wall_end_y);
+		j = (int)(game->wall_start_y);
+		end = (int)(game->wall_end_y);
 	}
 	else
 	{
-		j = (int)(wall_end_y);
-		end = (int)(wall_start_y);
+		j = (int)(game->wall_end_y);
+		end = (int)(game->wall_start_y);
 	}
 	// j = (int)(wall_start_y);
 	// end = (int)(wall_end_y);
 	while (j < end)
 	{
 		// printf("i = %d, j = %d\n", i, j);
-		game->map.pixel_map[i][j] = encode_rgb(wall_color);
+		color = calculate_wall_texture(game, i, j);
+		printf("color = %d\n ",color);
+		// game->map.pixel_map[i][j] = encode_rgb(wall_color);
+		game->map.pixel_map[i][j] = color;
 		j++;
 	}
 }
+
+
 
 void	calculate(t_game *game)
 {
@@ -183,10 +212,11 @@ void	calculate(t_game *game)
 		calculate_dda_variables(game);
 		execute_dda(game);
 		calculate_perpendicular_dist(game);
-		if (game->hit_side)
-			wall_color = create_color(255, 0, 0);
-		else
-			wall_color = create_color(128, 0, 0);
+		
+		// if (game->hit_side)
+		// 	wall_color = create_color(255, 0, 0);
+		// else
+		// 	wall_color = create_color(128, 0, 0);
 		draw_wall(game, wall_color, i);
 		i++;
 	}

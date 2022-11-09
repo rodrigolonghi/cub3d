@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 22:19:00 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:14:13 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,14 @@ int	open_fd(char *file)
 static void	validade_file_data(t_game *g)
 {
 	printf("no.addr = '%s'\n", g->no.addr);
-	g->no.img = mlx_xpm_file_to_image(g->mlx, g->no.addr, &g->no.width, &g->no.height);
-	g->so.img = mlx_xpm_file_to_image(g->mlx, g->so.addr, &g->so.width, &g->so.height);
-	g->ea.img = mlx_xpm_file_to_image(g->mlx, g->ea.addr, &g->ea.width, &g->ea.height);
-	g->we.img = mlx_xpm_file_to_image(g->mlx, g->we.addr, &g->we.width, &g->we.height);
+	g->no.img.ptr = mlx_xpm_file_to_image(g->mlx, g->no.addr, &g->no.width, &g->no.height);
+	g->so.img.ptr = mlx_xpm_file_to_image(g->mlx, g->so.addr, &g->so.width, &g->so.height);
+	g->ea.img.ptr = mlx_xpm_file_to_image(g->mlx, g->ea.addr, &g->ea.width, &g->ea.height);
+	g->we.img.ptr = mlx_xpm_file_to_image(g->mlx, g->we.addr, &g->we.width, &g->we.height);
+	g->no.img.data = mlx_get_data_addr(g->no.img.ptr, &g->no.img.bits_per_pixel, &g->no.img.line_length, &g->no.img.endian);
+	g->so.img.data = mlx_get_data_addr(g->so.img.ptr, &g->so.img.bits_per_pixel, &g->so.img.line_length, &g->so.img.endian);
+	g->ea.img.data = mlx_get_data_addr(g->ea.img.ptr, &g->ea.img.bits_per_pixel, &g->ea.img.line_length, &g->ea.img.endian);
+	g->we.img.data = mlx_get_data_addr(g->we.img.ptr, &g->we.img.bits_per_pixel, &g->we.img.line_length, &g->we.img.endian);
 	if (g->floor.r > 255 || g->floor.r < 0 || g->floor.g > 255 || g->floor.g < 0
 		|| g->floor.b > 255 || g->floor.b < 0 || g->ceilling.r > 255
 		|| g->ceilling.r < 0 || g->ceilling.g > 255 || g->ceilling.g < 0

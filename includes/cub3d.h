@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 22:20:35 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:07:01 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,19 @@ typedef struct s_map
 	char	**coordinates;
 }	t_map;
 
+typedef struct s_data
+{
+	void	*ptr;
+	char	*data;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
+
 typedef struct s_sprite
 {
-	void	*img;
+	t_data	img;
 	char	*addr;
 	int		width;
 	int		height;
@@ -101,6 +111,9 @@ typedef struct s_game
 	int			hit_side;
 	int			*characters;
 	double		dist_wall;
+	double		wall_height;
+	double		wall_start_y;
+	double		wall_end_y;
 }	t_game;
 
 void	start_game(t_game *game, int argc, char *argv[]);
