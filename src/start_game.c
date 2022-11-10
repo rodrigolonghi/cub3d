@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 22:10:05 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:37:10 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ static void	initiate(t_game *game)
 	game->texture[1].addr = NULL;
 	game->texture[2].addr = NULL;
 	game->texture[3].addr = NULL;
+	game->texture[0].img.ptr = NULL;
+	game->texture[1].img.ptr = NULL;
+	game->texture[2].img.ptr = NULL;
+	game->texture[3].img.ptr = NULL;
+	game->map.coordinates = NULL;
 	game->ceilling.r = -1;
 	game->floor.r = -1;
 }

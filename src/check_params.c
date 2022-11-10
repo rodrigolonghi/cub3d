@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 22:11:58 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/09 22:25:24 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	save_colors(t_game *game, char id, char *color, int fd)
 	}
 }
 
-static void	save_texture(t_game *game, char id, char *path, int fd)
+static int save_texture(t_game *game, char id, char *path, int fd)
 {
 	int	error;
 
@@ -82,31 +82,38 @@ static void	save_texture(t_game *game, char id, char *path, int fd)
 		else
 			error = TRUE;
 	}
-	if (error)
+	// if (error)
+	// {
+	// 	close(fd);
+	// 	throw_error("You need to choose only one texture per path", game);
+	// }
+	if(fd)
 	{
-		close(fd);
-		throw_error("You need to choose only one texture per path", game);
+		
 	}
+	return (error);
 }
 
-static int	is_valid_error(t_game *game)
-{
-	if (game->texture[0].addr == NULL || game->texture[1].addr == NULL || game->texture[2].addr == NULL
-		|| game->texture[3].addr == NULL || game->ceilling.r == -1
-		|| game->floor.r == -1)
-		return (TRUE);
-	return (FALSE);
-}
+// static int	is_valid_error(t_game *game)
+// {
+// 	if (game->texture[0].addr == NULL || game->texture[1].addr == NULL || game->texture[2].addr == NULL
+// 		|| game->texture[3].addr == NULL || game->ceilling.r == -1
+// 		|| game->floor.r == -1)
+// 		return (TRUE);
+// 	return (FALSE);
+// }
 
 static void	get_file_data(t_game *game, int fd)
 {
 	int		error;
+	int		has_ended;
 	char	*aux;
 	char	**matrix;
 	char	*temp;
 
 	error = FALSE;
-	while (get_next_line(fd, &aux) == 1 && !error)
+	has_ended = FALSE;
+	while (!has_ended && !error && get_next_line(fd, &aux) == 1)
 	{
 		if (ft_strlen(aux) == 0)
 		{
@@ -117,32 +124,32 @@ static void	get_file_data(t_game *game, int fd)
 		temp = ft_strtrim(aux, " \t");
 		matrix = ft_split(temp, ' ');
 		if (!ft_strncmp("NO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			save_texture(game, 'n', matrix[1], fd);
+			error = save_texture(game, 'n', matrix[1], fd);
 		else if (!ft_strncmp("SO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			save_texture(game, 's', matrix[1], fd);
+			error = save_texture(game, 's', matrix[1], fd);
 		else if (!ft_strncmp("EA", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			save_texture(game, 'e', matrix[1], fd);
+			error = save_texture(game, 'e', matrix[1], fd);
 		else if (!ft_strncmp("WE", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			save_texture(game, 'w', matrix[1], fd);
+			error = save_texture(game, 'w', matrix[1], fd);
 		else if (!ft_strncmp("F", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
 			save_colors(game, 'f', matrix[1], fd);
 		else if (!ft_strncmp("C", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
 			save_colors(game, 'c', matrix[1], fd);
 		else
-			error = TRUE;
+			has_ended = TRUE;
 		if (aux != NULL)
 			free(aux);
-		free(temp);
 		ft_free_char_matrix(matrix);
+		free(temp);
 	}
-	if (aux != NULL)
-		free(aux);
-	if (error && is_valid_error(game))
+	// if ((!has_ended || !error) && aux != NULL)
+	// 	free(aux);
+	if (error)
 	{
 		close(fd);
 		throw_error("Invalid .cub file!", game);
 	}
-	else if (error)
+	else if (has_ended)
 	{
 		while (get_next_line(fd, &aux) == 1)
 		{
@@ -173,7 +180,11 @@ static void	validade_file_data(t_game *g)
 	while (i < 4)
 	{
 		g->texture[i].img.ptr = mlx_xpm_file_to_image(g->mlx, g->texture[i].addr, &g->texture[i].width, &g->texture[i].height);
+		if (!g->texture[i].img.ptr)
+			throw_error("Invalid texture!", g);
 		g->texture[i].img.data = mlx_get_data_addr(g->texture[i].img.ptr, &g->texture[i].img.bits_per_pixel, &g->texture[i].img.line_length, &g->texture[i].img.endian);
+		if (!g->texture[i].img.data)
+			throw_error("Invalid texture!", g);
 		i++;
 	}
 	if (g->floor.r > 255 || g->floor.r < 0 || g->floor.g > 255 || g->floor.g < 0
