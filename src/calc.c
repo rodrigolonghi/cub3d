@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 22:17:07 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:24:43 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ static int	calculate_wall_texture(t_game *game, int i, int j)
 	else if (game->hit_side == 0 && game->ray_dir.x > 0)
 		t = 3;
 	if (!game->hit_side)
-		wall_x = game->player_pos.y + game->perp_dist * game->ray_dir.y;
+		wall_x = game->player_pos.y + fabs(game->perp_dist) * game->ray_dir.y;
 	else
-		wall_x = game->player_pos.x + game->perp_dist * game->ray_dir.x;
+		wall_x = game->player_pos.x + fabs(game->perp_dist) * game->ray_dir.x;
 	wall_x -= (int)wall_x;
 	tex_x = (int)(wall_x * (double)game->texture[t].width);
 	wall_y =  (double)game->texture[t].height * (j - (int)game->wall_start_y) / game->wall_height;
@@ -167,15 +167,12 @@ static int	calculate_wall_texture(t_game *game, int i, int j)
 			* (game->texture[t].img.bits_per_pixel / 8))));
 }
 
-static void	draw_wall(t_game *game, t_color wall_color, int i)
+static void	draw_wall(t_game *game, int i)
 {
 	int		j;
 	int		end;
 	int		color;
-	
-	if (wall_color.r == 0){
-		
-	}
+
 	if (fabs(game->perp_dist) < 1.0)
 		game->wall_height = (double)(HEIGHT);
 	else
@@ -211,7 +208,6 @@ static void	draw_wall(t_game *game, t_color wall_color, int i)
 void	calculate(t_game *game)
 {
 	int		i;
-	t_color	wall_color;
 
 	fill_background(game);
 	i = 0;
@@ -221,12 +217,7 @@ void	calculate(t_game *game)
 		calculate_dda_variables(game);
 		execute_dda(game);
 		calculate_perpendicular_dist(game);
-		
-		// if (game->hit_side)
-		// 	wall_color = create_color(255, 0, 0);
-		// else
-		// 	wall_color = create_color(128, 0, 0);
-		draw_wall(game, wall_color, i);
+		draw_wall(game, i);
 		i++;
 	}
 }
