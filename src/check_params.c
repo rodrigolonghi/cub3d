@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/09 22:25:24 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:38:18 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,11 @@ static void	get_file_data(t_game *game, int fd)
 	has_ended = FALSE;
 	while (!has_ended && !error && get_next_line(fd, &aux) == 1)
 	{
+		printf("aux = '%s'\n", aux);
 		if (ft_strlen(aux) == 0)
 		{
 			if (aux != NULL)
-				free(aux);
+				ft_free_ptr((void *)&aux);
 			continue ;
 		}
 		temp = ft_strtrim(aux, " \t");
@@ -137,15 +138,19 @@ static void	get_file_data(t_game *game, int fd)
 			save_colors(game, 'c', matrix[1], fd);
 		else
 			has_ended = TRUE;
-		if (aux != NULL)
-			free(aux);
 		ft_free_char_matrix(matrix);
-		free(temp);
+		ft_free_ptr((void *)&temp);
+		ft_free_ptr((void *)&aux);
 	}
-	// if ((!has_ended || !error) && aux != NULL)
-	// 	free(aux);
 	if (error)
 	{
+		while (get_next_line(fd, &aux) == 1)
+		{
+			if (aux != NULL)
+				ft_free_ptr((void *)&aux);
+		}
+		if (aux != NULL)
+			ft_free_ptr((void *)&aux);
 		close(fd);
 		throw_error("Invalid .cub file!", game);
 	}
@@ -154,10 +159,10 @@ static void	get_file_data(t_game *game, int fd)
 		while (get_next_line(fd, &aux) == 1)
 		{
 			if (aux != NULL)
-				free(aux);
+				ft_free_ptr((void *)&aux);
 		}
 		if (aux != NULL)
-			free(aux);
+			ft_free_ptr((void *)&aux);
 	}
 }
 

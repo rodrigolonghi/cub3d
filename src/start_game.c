@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/09 21:37:10 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/10 22:12:44 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,13 @@ static void	initiate(t_game *game)
 	game->floor.r = -1;
 }
 
-static void	start_win(t_game *game)
-{
-	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
-	// load_image(game);
-}
-
 void	start_game(t_game *game, int argc, char *argv[])
 {
 	initiate(game);
-	start_win(game);
+	game->mlx = mlx_init();
 	check_params(game, argc, argv);
 	check_map(game, argv[1]);
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	mlx_hook(game->win, 2, 1L << 0, press, game);
 	mlx_hook(game->win, 3, 1L << 1, release, game);
 	mlx_hook(game->win, 17, 0, close_game, game);

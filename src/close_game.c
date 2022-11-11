@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 03:50:11 by coder            ###   ########.fr       */
+/*   Updated: 2022/11/10 22:31:18 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	free_game(t_game *game)
 		while (i < 4)
 		{
 			if (game->texture[i].addr != NULL)
-				free(game->texture[i].addr);
+				ft_free_ptr((void *)&game->texture[i].addr);
 			if (game->texture[i].img.ptr != NULL)
 				mlx_destroy_image(game->mlx, game->texture[i].img.ptr);
 			i++;
