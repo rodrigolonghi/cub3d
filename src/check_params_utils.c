@@ -16,7 +16,7 @@ void	save_colors(t_game *g, char id, char *color)
 {
 	char	**matrix;
 
-	if (ft_chrqty(color, ',') != 3)
+	if (ft_chrqty(color, ',') != 2)
 	{
 		g->error = TRUE;
 		return ;
