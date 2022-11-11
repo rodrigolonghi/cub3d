@@ -1,11 +1,10 @@
-F 130,130,130
-C 190,190,255
-
 NO ./assets/0.xpm
 SO ./assets/1.xpm
 WE ./assets/2.xpm
 EA ./assets/3.xpm
-NO ./assets/0.xpm
+
+F 130,130,130
+C 190,190,255
 
 1111111111
 1100110001

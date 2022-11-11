@@ -6,13 +6,13 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/10 22:38:18 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:46:56 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	save_colors(t_game *game, char id, char *color, int fd)
+static int	save_colors(t_game *game, char id, char *color, int fd)
 {
 	int		error;
 	char	**matrix;
@@ -42,11 +42,16 @@ static void	save_colors(t_game *game, char id, char *color, int fd)
 		else
 			error = TRUE;
 	}
-	if (error)
+	// if (error)
+	// {
+	// 	close(fd);
+	// 	throw_error("Invalid colors!", game);
+	// }
+	if(fd)
 	{
-		close(fd);
-		throw_error("Invalid colors!", game);
+		
 	}
+	return (error);
 }
 
 static int save_texture(t_game *game, char id, char *path, int fd)
@@ -94,14 +99,14 @@ static int save_texture(t_game *game, char id, char *path, int fd)
 	return (error);
 }
 
-// static int	is_valid_error(t_game *game)
-// {
-// 	if (game->texture[0].addr == NULL || game->texture[1].addr == NULL || game->texture[2].addr == NULL
-// 		|| game->texture[3].addr == NULL || game->ceilling.r == -1
-// 		|| game->floor.r == -1)
-// 		return (TRUE);
-// 	return (FALSE);
-// }
+static int	is_valid_end(t_game *game)
+{
+	if (game->texture[0].addr == NULL || game->texture[1].addr == NULL || game->texture[2].addr == NULL
+		|| game->texture[3].addr == NULL || game->ceilling.r == -1
+		|| game->floor.r == -1)
+		return (FALSE);
+	return (TRUE);
+}
 
 static void	get_file_data(t_game *game, int fd)
 {
@@ -133,16 +138,20 @@ static void	get_file_data(t_game *game, int fd)
 		else if (!ft_strncmp("WE", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
 			error = save_texture(game, 'w', matrix[1], fd);
 		else if (!ft_strncmp("F", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-			save_colors(game, 'f', matrix[1], fd);
+			error = save_colors(game, 'f', matrix[1], fd);
 		else if (!ft_strncmp("C", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-			save_colors(game, 'c', matrix[1], fd);
+			error = save_colors(game, 'c', matrix[1], fd);
 		else
+		{
+			if (!map_started(aux) && ft_strlen(aux) != 0)
+				error = TRUE;
 			has_ended = TRUE;
+		}
 		ft_free_char_matrix(matrix);
 		ft_free_ptr((void *)&temp);
 		ft_free_ptr((void *)&aux);
 	}
-	if (error)
+	if (error || !is_valid_end(game))
 	{
 		while (get_next_line(fd, &aux) == 1)
 		{

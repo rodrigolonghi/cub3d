@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:04:10 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 21:49:50 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:27:45 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	int			error;
 	t_color		ceilling;
 	t_color		floor;
 	t_texture	*texture;
@@ -134,5 +135,6 @@ int		press(int key, t_game *game);
 int		release(int key, t_game *game);
 t_vec	vector_rotation(t_vec vec, double degree, int rotation);
 t_vec	vector_mul(t_vec a, t_vec b);
+int		map_started(char *line);
 
 #endif

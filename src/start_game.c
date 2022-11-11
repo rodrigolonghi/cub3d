@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:34:40 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/10 22:12:44 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:08:41 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	initiate(t_game *game)
 {
 	game->mlx = NULL;
 	game->win = NULL;
+	game->error = FALSE;
 	game->movement_speed = 1.0 / 60.0;
 	game->rotation_speed = 1.0 / 60.0;
 	game->rotation = 0;

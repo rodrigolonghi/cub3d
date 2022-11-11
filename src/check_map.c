@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/02 19:39:25 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:50:09 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	map_started(char *line)
+int	map_started(char *line)
 {
 	int	aux;
 
@@ -171,6 +171,8 @@ static void	count_map_size(t_game *game, char *map)
 				free(aux);
 			continue ;
 		}
+		if (ft_strlen(aux) == 0)
+			game->error = TRUE;
 		if (ft_strlen(aux) > game->map.cols)
 			game->map.cols = ft_strlen(aux);
 		game->map.rows++;
@@ -179,7 +181,11 @@ static void	count_map_size(t_game *game, char *map)
 	}
 	game->map.rows++;
 	if (aux != NULL)
+	{
+		if (ft_strlen(aux) == 0)
+			game->error = TRUE;
 		free(aux);
+	}
 	close(fd);
 }
 
@@ -196,7 +202,7 @@ static void	validate_player(t_game *game)
 		cols = 0;
 		while (cols < game->map.cols)
 		{
-			if (game->map.coordinates[rows][cols] && ft_strchr("NSWE",
+			if (cols < ft_strlen(game->map.coordinates[rows]) && game->map.coordinates[rows][cols] && ft_strchr("NSWE",
 				game->map.coordinates[rows][cols]))
 				has_player++;
 			cols++;
@@ -212,14 +218,14 @@ static void	validate_player(t_game *game)
 void	check_map(t_game *game, char *map)
 {
 	count_map_size(game, map);
-	if (game->map.rows < 3 || game->map.cols < 3)
+	if (game->map.rows < 3 || game->map.cols < 3 || game->error)
 		throw_error("Invalid map!", game);
 	game->map.coordinates = ft_calloc(game->map.rows + 1, sizeof(char *));
 	save_map(game, map);
 	check_map_walls(game);
 	validate_player(game);
 	for (int i = 0; i < game->map.rows; i++)
-		printf("%s\n", game->map.coordinates[i]);
+		printf("'%s'\n", game->map.coordinates[i]);
 	game->map.coordinates[(int)(game->player_pos.y)]
 	[(int)(game->player_pos.x)] = '0';
 	printf("player pos - [%f][%f]\n", game->player_pos.x, game->player_pos.y);
