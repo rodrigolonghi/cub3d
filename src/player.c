@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:41:36 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 19:04:50 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:06:23 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void	update_input(t_game *game)
 	t_vec	movement;
 	t_vec	next_pos;
 
-	next_pos = vector_add(game->p.player_pos, movement);
 	movement = vector_add(game->p.velocity, game->p.strafe_vel);
+	next_pos = vector_add(game->p.player_pos, movement);
 	if (next_pos.x < game->dist_wall || next_pos.y < game->dist_wall
 		|| next_pos.x + game->dist_wall > game->file.map.rows || next_pos.y
 		+ game->dist_wall > game->file.map.cols)
