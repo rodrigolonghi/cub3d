@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:38:54 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/26 23:02:12 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:29:42 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	key_hook(int key, void *param, int key_type)
 	t_game	*game;
 
 	game = (t_game *)param;
-	// printf("keyhook = %d, keytype = %d \n", key, key_type);
 	if (key == ESC && key_type == PRESS)
 		close_game(game);
 	else if (key_type == PRESS)

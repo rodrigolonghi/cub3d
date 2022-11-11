@@ -6,7 +6,7 @@
 /*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:21:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:33:18 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:57:53 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	render(t_game *game)
 		while (x < WIDTH - 1)
 		{
 			mlx_pixel_put(game->mlx, game->win, x, HEIGHT - y,
-				game->map.pixel_map[x][y]);
+				game->file.map.pixel_map[x][y]);
 			x++;
 		}
 		y--;

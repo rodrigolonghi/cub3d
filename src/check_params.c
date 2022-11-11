@@ -3,175 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/10 23:46:56 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:40:31 by rfelipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	save_colors(t_game *game, char id, char *color, int fd)
+static void	save_file_data(t_game *game, char *aux, int *has_ended)
 {
-	int		error;
+	char	*temp;
 	char	**matrix;
 
-	error = FALSE;
-	if (id == 'f')
+	temp = ft_strtrim(aux, " \t");
+	matrix = ft_split(temp, ' ');
+	if (!ft_strncmp("NO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
+		save_n_s_texture(game, 'n', matrix[1]);
+	else if (!ft_strncmp("SO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
+		save_n_s_texture(game, 's', matrix[1]);
+	else if (!ft_strncmp("EA", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
+		save_e_w_texture(game, 'e', matrix[1]);
+	else if (!ft_strncmp("WE", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
+		save_e_w_texture(game, 'w', matrix[1]);
+	else if (!ft_strncmp("F", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
+		save_colors(game, 'f', matrix[1]);
+	else if (!ft_strncmp("C", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
+		save_colors(game, 'c', matrix[1]);
+	else
 	{
-		if (game->floor.r == -1)
-		{
-			matrix = ft_split(color, ',');
-			game->floor = create_color(ft_atoi(matrix[0]), ft_atoi(matrix[1]),
-					ft_atoi(matrix[2]));
-			ft_free_char_matrix(matrix);
-		}
-		else
-			error = TRUE;
+		if (!map_started(aux) && ft_strlen(aux) != 0)
+			game->error = TRUE;
+		has_ended[0] = TRUE;
 	}
-	else if (id == 'c')
-	{
-		if (game->ceilling.r == -1)
-		{
-			matrix = ft_split(color, ',');
-			game->ceilling = create_color(ft_atoi(matrix[0]),
-					ft_atoi(matrix[1]), ft_atoi(matrix[2]));
-			ft_free_char_matrix(matrix);
-		}
-		else
-			error = TRUE;
-	}
-	// if (error)
-	// {
-	// 	close(fd);
-	// 	throw_error("Invalid colors!", game);
-	// }
-	if(fd)
-	{
-		
-	}
-	return (error);
-}
-
-static int save_texture(t_game *game, char id, char *path, int fd)
-{
-	int	error;
-
-	error = FALSE;
-	if (id == 'n')
-	{
-		if (game->texture[0].addr == NULL)
-			game->texture[0].addr = ft_strdup(path);
-		else
-			error = TRUE;
-	}
-	else if (id == 's' && !error)
-	{
-		if (game->texture[1].addr == NULL)
-			game->texture[1].addr = ft_strdup(path);
-		else
-			error = TRUE;
-	}
-	else if (id == 'e' && !error)
-	{
-		if (game->texture[2].addr == NULL)
-			game->texture[2].addr = ft_strdup(path);
-		else
-			error = TRUE;
-	}
-	else if (id == 'w' && !error)
-	{
-		if (game->texture[3].addr == NULL)
-			game->texture[3].addr = ft_strdup(path);
-		else
-			error = TRUE;
-	}
-	// if (error)
-	// {
-	// 	close(fd);
-	// 	throw_error("You need to choose only one texture per path", game);
-	// }
-	if(fd)
-	{
-		
-	}
-	return (error);
-}
-
-static int	is_valid_end(t_game *game)
-{
-	if (game->texture[0].addr == NULL || game->texture[1].addr == NULL || game->texture[2].addr == NULL
-		|| game->texture[3].addr == NULL || game->ceilling.r == -1
-		|| game->floor.r == -1)
-		return (FALSE);
-	return (TRUE);
+	ft_free_char_matrix(matrix);
+	ft_free_ptr((void *)&temp);
 }
 
 static void	get_file_data(t_game *game, int fd)
 {
-	int		error;
-	int		has_ended;
+	int		*has_ended;
 	char	*aux;
-	char	**matrix;
-	char	*temp;
 
-	error = FALSE;
-	has_ended = FALSE;
-	while (!has_ended && !error && get_next_line(fd, &aux) == 1)
+	has_ended = malloc(sizeof(int));
+	has_ended[0] = FALSE;
+	while (!has_ended[0] && !game->error && get_next_line(fd, &aux) == 1)
 	{
-		printf("aux = '%s'\n", aux);
 		if (ft_strlen(aux) == 0)
 		{
 			if (aux != NULL)
 				ft_free_ptr((void *)&aux);
 			continue ;
 		}
-		temp = ft_strtrim(aux, " \t");
-		matrix = ft_split(temp, ' ');
-		if (!ft_strncmp("NO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			error = save_texture(game, 'n', matrix[1], fd);
-		else if (!ft_strncmp("SO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			error = save_texture(game, 's', matrix[1], fd);
-		else if (!ft_strncmp("EA", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			error = save_texture(game, 'e', matrix[1], fd);
-		else if (!ft_strncmp("WE", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-			error = save_texture(game, 'w', matrix[1], fd);
-		else if (!ft_strncmp("F", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-			error = save_colors(game, 'f', matrix[1], fd);
-		else if (!ft_strncmp("C", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-			error = save_colors(game, 'c', matrix[1], fd);
-		else
-		{
-			if (!map_started(aux) && ft_strlen(aux) != 0)
-				error = TRUE;
-			has_ended = TRUE;
-		}
-		ft_free_char_matrix(matrix);
-		ft_free_ptr((void *)&temp);
+		save_file_data(game, aux, has_ended);
 		ft_free_ptr((void *)&aux);
 	}
-	if (error || !is_valid_end(game))
+	free(has_ended);
+	read_until_end(fd);
+	if (game->error || !is_valid_end(game))
 	{
-		while (get_next_line(fd, &aux) == 1)
-		{
-			if (aux != NULL)
-				ft_free_ptr((void *)&aux);
-		}
-		if (aux != NULL)
-			ft_free_ptr((void *)&aux);
 		close(fd);
 		throw_error("Invalid .cub file!", game);
-	}
-	else if (has_ended)
-	{
-		while (get_next_line(fd, &aux) == 1)
-		{
-			if (aux != NULL)
-				ft_free_ptr((void *)&aux);
-		}
-		if (aux != NULL)
-			ft_free_ptr((void *)&aux);
 	}
 }
 
@@ -193,18 +86,23 @@ static void	validade_file_data(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		g->texture[i].img.ptr = mlx_xpm_file_to_image(g->mlx, g->texture[i].addr, &g->texture[i].width, &g->texture[i].height);
-		if (!g->texture[i].img.ptr)
+		g->file.texture[i].img.ptr = mlx_xpm_file_to_image(g->mlx,
+				g->file.texture[i].addr, &g->file.texture[i].width,
+				&g->file.texture[i].height);
+		if (!g->file.texture[i].img.ptr)
 			throw_error("Invalid texture!", g);
-		g->texture[i].img.data = mlx_get_data_addr(g->texture[i].img.ptr, &g->texture[i].img.bits_per_pixel, &g->texture[i].img.line_length, &g->texture[i].img.endian);
-		if (!g->texture[i].img.data)
+		g->file.texture[i].img.data = mlx_get_data_addr(g->file.texture[i].img
+				.ptr, &g->file.texture[i].img.bits_per_pixel, &g->file
+				.texture[i].img.line_length, &g->file.texture[i].img.endian);
+		if (!g->file.texture[i].img.data)
 			throw_error("Invalid texture!", g);
 		i++;
 	}
-	if (g->floor.r > 255 || g->floor.r < 0 || g->floor.g > 255 || g->floor.g < 0
-		|| g->floor.b > 255 || g->floor.b < 0 || g->ceilling.r > 255
-		|| g->ceilling.r < 0 || g->ceilling.g > 255 || g->ceilling.g < 0
-		|| g->ceilling.b > 255 || g->ceilling.b < 0)
+	if (g->file.floor.r > 255 || g->file.floor.r < 0 || g->file.floor.g > 255
+		|| g->file.floor.g < 0 || g->file.floor.b > 255 || g->file.floor.b < 0
+		|| g->file.ceilling.r > 255 || g->file.ceilling.r < 0
+		|| g->file.ceilling.g > 255 || g->file.ceilling.g < 0
+		|| g->file.ceilling.b > 255 || g->file.ceilling.b < 0)
 		throw_error("Invalid color!", g);
 }
 
