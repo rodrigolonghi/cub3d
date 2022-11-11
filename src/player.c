@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:41:36 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/01 21:31:12 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 00:11:22 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ static void	y_walk(t_game *game)
 static void	update_input(t_game *game)
 {
 	t_vec	movement;
-	// t_vec	next_pos;
+	t_vec	next_pos;
 	// t_vec	cam_pos;
 
 	movement = vector_add(game->velocity, game->strafe_vel);
 	// cam_pos = vector_add(game->player_pos, game->player_dir);
-	// next_pos = vector_add(cam_pos, movement);
+	next_pos = vector_add(game->player_pos, movement);
+	if (next_pos.x < 1.5 || next_pos.y < 1.5 || next_pos.x + 1.5 > game->map.rows || next_pos.y + 1.5 > game->map.cols)
+		movement = create_vector(0.0, 0.0);
 	// if (movement.x > 0.0)
 	// 	if (game->map.coordinates[(int)(next_pos.x + game->dist_wall)][(int)cam_pos.y] != '0')
 	// 		movement = vector_mul(movement, create_vector(0.0, 1.0));
