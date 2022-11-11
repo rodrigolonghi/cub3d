@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/09 21:24:43 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 03:52:37 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ static int	calculate_wall_texture(t_game *game, int i, int j)
 		t = 1;
 	else if (game->hit_side == 0 && game->ray_dir.x < 0)
 		t = 2;
-	else if (game->hit_side == 0 && game->ray_dir.x > 0)
+	else
 		t = 3;
 	if (!game->hit_side)
 		wall_x = game->player_pos.y + fabs(game->perp_dist) * game->ray_dir.y;

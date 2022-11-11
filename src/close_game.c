@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:41:31 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/08 22:20:34 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 03:50:11 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ static void	free_game(t_game *game)
 		mlx_destroy_display(game->mlx);
 		ft_free_ptr(&game->mlx);
 	}
+
+	if(game)
+		ft_free_ptr((void *)&game);
 }
 
 int	close_game(t_game *game)

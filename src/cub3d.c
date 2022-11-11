@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 20:03:38 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/03 22:24:41 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 03:46:39 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	main(int argc, char *argv[])
 {
-	t_game	game;
+	t_game	*game;
 
-	start_game(&game, argc, argv);
+	
+	game = malloc(sizeof(t_game));
+	start_game(game, argc, argv);
 	return (0);
 }
