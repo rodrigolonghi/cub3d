@@ -6,7 +6,7 @@
 /*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 21:22:23 by acarneir         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:00:48 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 static void	save_file_data(t_game *game, char *aux, int *has_ended)
 {
 	char	*temp;
-	char	**matrix;
+	char	**m;
 
 	temp = ft_strtrim(aux, " \t");
-	matrix = ft_split(temp, ' ');
-	if (!ft_strncmp("NO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-		save_n_s_texture(game, 'n', matrix[1]);
-	else if (!ft_strncmp("SO", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-		save_n_s_texture(game, 's', matrix[1]);
-	else if (!ft_strncmp("EA", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-		save_e_w_texture(game, 'e', matrix[1]);
-	else if (!ft_strncmp("WE", matrix[0], 2) && ft_strlen(matrix[0]) == 2)
-		save_e_w_texture(game, 'w', matrix[1]);
-	else if (!ft_strncmp("F", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-		save_colors(game, 'f', matrix[1]);
-	else if (!ft_strncmp("C", matrix[0], 1) && ft_strlen(matrix[0]) == 1)
-		save_colors(game, 'c', matrix[1]);
+	m = ft_split(temp, ' ');
+	if (!ft_strncmp("NO", m[0], 2) && ft_strlen(m[0]) == 2 && m[1])
+		save_n_s_texture(game, 'n', m[1]);
+	else if (!ft_strncmp("SO", m[0], 2) && ft_strlen(m[0]) == 2 && m[1])
+		save_n_s_texture(game, 's', m[1]);
+	else if (!ft_strncmp("EA", m[0], 2) && ft_strlen(m[0]) == 2 && m[1])
+		save_e_w_texture(game, 'e', m[1]);
+	else if (!ft_strncmp("WE", m[0], 2) && ft_strlen(m[0]) == 2 && m[1])
+		save_e_w_texture(game, 'w', m[1]);
+	else if (!ft_strncmp("F", m[0], 1) && ft_strlen(m[0]) == 1 && m[1])
+		save_colors(game, 'f', m[1]);
+	else if (!ft_strncmp("C", m[0], 1) && ft_strlen(m[0]) == 1 && m[1])
+		save_colors(game, 'c', m[1]);
 	else
 	{
 		if (!map_started(aux) && ft_strlen(aux) != 0)
 			game->error = TRUE;
 		has_ended[0] = TRUE;
 	}
-	ft_free_char_matrix(matrix);
+	ft_free_char_matrix(m);
 	ft_free_ptr((void *)&temp);
 }
 

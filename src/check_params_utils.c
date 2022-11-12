@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_params_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:40:16 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 18:41:03 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 22:09:52 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	save_colors(t_game *g, char id, char *color)
 		return ;
 	}
 	matrix = ft_split(color, ',');
+	if (!ft_is_all_digit(matrix[0], ft_strlen(matrix[0]))
+		|| !ft_is_all_digit(matrix[1], ft_strlen(matrix[1]))
+		|| !ft_is_all_digit(matrix[2], ft_strlen(matrix[2])))
+		g->error = TRUE;
 	if (id == 'f' && g->file.floor.r == -1)
 		g->file.floor = create_color(
 				ft_atoi(matrix[0]), ft_atoi(matrix[1]), ft_atoi(matrix[2]));
