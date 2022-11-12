@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:47:13 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 18:12:18 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:06:30 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	check_map_walls(t_game *game)
 	while (rows < game->file.map.rows)
 	{
 		cols = 0;
-		while (game->file.map.coordinates[rows][cols]
+		while (cols < ft_strlen(game->file.map.coordinates[rows])
+			&& game->file.map.coordinates[rows][cols]
 			&& cols < game->file.map.cols)
 		{
 			if (is_edge(game, rows, cols))
@@ -101,13 +102,12 @@ void	check_map(t_game *game, char *map)
 
 	fd = open_fd(map);
 	count_map_size(game, fd);
+	close(fd);
 	if (game->file.map.rows < 3 || game->file.map.cols < 3 || game->error)
-	{
-		close(fd);
 		throw_error("Invalid map!", game);
-	}
 	game->file.map.coordinates = ft_calloc(
 			game->file.map.rows + 1, sizeof(char *));
+	fd = open_fd(map);
 	save_map(game, fd);
 	close(fd);
 	check_map_walls(game);

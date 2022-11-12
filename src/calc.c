@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 15:30:28 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 18:00:07 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:31:36 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	calculate_wall_texture(t_game *g, int j)
 		t = 0;
 	else if (g->dda.hit_side == 1 && g->dda.ray_dir.y > 0)
 		t = 1;
-	else if (g->dda.hit_side == 0 && g->dda.ray_dir.x < 0)
+	else if (g->dda.hit_side == 0 && g->dda.ray_dir.x > 0)
 		t = 2;
 	else
 		t = 3;

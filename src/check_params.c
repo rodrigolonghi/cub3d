@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfelipe- <rfelipe-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: acarneir <acarneir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:44:23 by rfelipe-          #+#    #+#             */
-/*   Updated: 2022/11/11 18:40:31 by rfelipe-         ###   ########.fr       */
+/*   Updated: 2022/11/11 21:22:23 by acarneir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ static void	save_file_data(t_game *game, char *aux, int *has_ended)
 
 static void	get_file_data(t_game *game, int fd)
 {
-	int		*has_ended;
+	int		has_ended[1];
 	char	*aux;
 
-	has_ended = malloc(sizeof(int));
 	has_ended[0] = FALSE;
 	while (!has_ended[0] && !game->error && get_next_line(fd, &aux) == 1)
 	{
@@ -59,7 +58,10 @@ static void	get_file_data(t_game *game, int fd)
 		save_file_data(game, aux, has_ended);
 		ft_free_ptr((void *)&aux);
 	}
-	free(has_ended);
+	if (has_ended[0] == FALSE && !game->error)
+		game->error = TRUE;
+	if (aux != NULL)
+		ft_free_ptr((void *)&aux);
 	read_until_end(fd);
 	if (game->error || !is_valid_end(game))
 	{
